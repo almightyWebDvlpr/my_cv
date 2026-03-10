@@ -253,6 +253,125 @@ li::marker {
   color: var(--section-charcoal);
 }
 
+@media (max-width: 900px) {
+  .page {
+    padding: 20px 14px 32px;
+  }
+
+  .actions {
+    max-width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .resume {
+    padding: 1.15cm;
+    border-radius: 10px;
+  }
+
+  .header h1 {
+    font-size: 21pt;
+  }
+
+  .role {
+    font-size: 12pt;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px 10px 24px;
+    background: var(--bg);
+  }
+
+  .actions {
+    gap: 10px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .paper-select,
+  .print-btn {
+    width: 100%;
+  }
+
+  .resume {
+    width: 100%;
+    padding: 18px 16px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .header {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-size: 17pt;
+    line-height: 1.08;
+  }
+
+  .role {
+    margin-top: 8px;
+    font-size: 11.5pt;
+    line-height: 1.3;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .contact-item {
+    align-items: flex-start;
+  }
+
+  .section + .section {
+    margin-top: 16px;
+  }
+
+  .section h2 {
+    font-size: 11pt;
+    letter-spacing: 0.06em;
+  }
+
+  .section p,
+  .section li,
+  .skill-group h3,
+  .skill-group p,
+  .job h3 {
+    font-size: 10.2pt;
+  }
+
+  .meta,
+  .contact,
+  .contact-grid {
+    font-size: 9.3pt;
+  }
+
+  ul {
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .resume {
+    padding: 16px 14px;
+  }
+
+  .header h1 {
+    font-size: 15.5pt;
+  }
+
+  .role {
+    font-size: 10.8pt;
+  }
+
+  .section h2 {
+    font-size: 10.6pt;
+  }
+}
+
 @media print {
   @page {
     size: auto;
