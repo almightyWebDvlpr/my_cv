@@ -254,11 +254,21 @@ export default function App() {
 
     setIsExporting(true)
     setIsPdfMode(true)
+    let exportHost
     try {
       await new Promise((resolve) => requestAnimationFrame(() => resolve()))
       await new Promise((resolve) => requestAnimationFrame(() => resolve()))
+      const exportNode = resumeRef.current.cloneNode(true)
+      exportNode.classList.add('pdf-capture')
+      exportNode.style.width = '1020px'
+      exportNode.style.maxWidth = '1020px'
 
-      const canvas = await html2canvas(resumeRef.current, {
+      exportHost = document.createElement('div')
+      exportHost.className = 'pdf-export-host'
+      exportHost.appendChild(exportNode)
+      document.body.appendChild(exportHost)
+
+      const canvas = await html2canvas(exportNode, {
         scale: 3,
         backgroundColor: '#ffffff',
         useCORS: true,
@@ -293,6 +303,9 @@ export default function App() {
       pdf.addImage(imageData, 'PNG', x, y, renderWidth, renderHeight, undefined, 'FAST')
       pdf.save(`${current.ui.filePrefix}-${lang.toUpperCase()}-A4.pdf`)
     } finally {
+      if (exportHost?.parentNode) {
+        exportHost.parentNode.removeChild(exportHost)
+      }
       setIsPdfMode(false)
       setIsExporting(false)
     }

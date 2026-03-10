@@ -253,6 +253,110 @@ li::marker {
   color: var(--section-charcoal);
 }
 
+.pdf-export-host {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1020px;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.resume.pdf-capture {
+  width: 1020px !important;
+  max-width: 1020px !important;
+  margin: 0;
+  padding: 1.1cm 1cm 1.1cm;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.resume.pdf-capture .header h1 {
+  font-size: 23pt;
+}
+
+.resume.pdf-capture .role {
+  font-size: 12.4pt;
+}
+
+.resume.pdf-capture .contact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 10px;
+  margin-top: 6px;
+}
+
+.resume.pdf-capture .section h2 {
+  margin-bottom: 6px;
+  padding-bottom: 3px;
+  font-size: 11pt;
+}
+
+.resume.pdf-capture .section p,
+.resume.pdf-capture .section li,
+.resume.pdf-capture .skill-group h3,
+.resume.pdf-capture .skill-group p,
+.resume.pdf-capture .job h3 {
+  font-size: 10pt;
+  line-height: 1.3;
+}
+
+.resume.pdf-capture .meta,
+.resume.pdf-capture .contact,
+.resume.pdf-capture .contact-grid {
+  font-size: 9.3pt;
+  line-height: 1.28;
+}
+
+@media (max-width: 640px) {
+  .resume.pdf-capture {
+    width: 1020px !important;
+    max-width: 1020px !important;
+    padding: 1.1cm 1cm 1.1cm;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .resume.pdf-capture .header {
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .resume.pdf-capture .header h1 {
+    font-size: 23pt;
+    line-height: 1.12;
+  }
+
+  .resume.pdf-capture .role {
+    margin-top: 6px;
+    font-size: 12.4pt;
+    line-height: 1.3;
+  }
+
+  .resume.pdf-capture .contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 10px;
+  }
+
+  .resume.pdf-capture .contact-item {
+    align-items: center;
+  }
+
+  .resume.pdf-capture .section + .section {
+    margin-top: 13px;
+  }
+
+  .resume.pdf-capture .section h2 {
+    font-size: 11pt;
+    letter-spacing: 0.08em;
+  }
+
+  .resume.pdf-capture ul {
+    padding-left: 18px;
+  }
+}
+
 @media (max-width: 900px) {
   .page {
     padding: 20px 14px 32px;
