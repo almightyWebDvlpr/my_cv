@@ -66,6 +66,14 @@
   padding: 1.5cm;
 }
 
+.resume.lang-en {
+  font-family: var(--font-en);
+}
+
+.resume.lang-uk {
+  font-family: var(--font-uk);
+}
+
 .resume.paper-letter {
   --content-width: 1060px;
 }

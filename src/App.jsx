@@ -321,7 +321,7 @@ export default function App() {
 
       <article
         ref={resumeRef}
-        className={`resume paper-a4 ${isPdfMode ? 'pdf-mode' : ''}`}
+        className={`resume paper-a4 lang-${lang} ${isPdfMode ? 'pdf-mode' : ''}`}
         aria-label={current.sections.ariaLabel}
       >
         <header className="header">
