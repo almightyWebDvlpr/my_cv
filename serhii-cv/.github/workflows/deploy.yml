@@ -1,5 +1,7 @@
 name: Deploy to GitHub Pages
 
+# A fresh push creates a new workflow run and avoids stale duplicate page artifacts.
+
 on:
   push:
     branches:
