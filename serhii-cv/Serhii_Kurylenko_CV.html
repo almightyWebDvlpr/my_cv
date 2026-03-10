@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serhii Kurylenko - CV</title>
+  <style>
+    :root {
+      --blue: #4f6f9f;
+      --blue-dark: #3f5e8b;
+      --text: #222;
+      --muted: #666;
+      --line: #d7d7d7;
+      --left-bg: #efefef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Arial", "Helvetica", sans-serif;
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 31% 69%;
+    }
+
+    .left {
+      background: var(--left-bg);
+      padding: 22mm 10mm 18mm;
+    }
+
+    .right {
+      padding: 18mm 15mm 16mm;
+      border-left: 2px solid #9fb0c8;
+    }
+
+    .photo {
+      width: 46mm;
+      height: 46mm;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #5d7090, #3f5578);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15mm;
+      font-weight: 700;
+      margin: 0 auto 14mm;
+      letter-spacing: 1px;
+    }
+
+    .left-section {
+      margin-top: 8mm;
+    }
+
+    .left-title {
+      font-size: 8pt;
+      letter-spacing: 3px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin: 0 0 5mm;
+      border-bottom: 1px solid #cfcfcf;
+      padding-bottom: 2mm;
+    }
+
+    .contact-item,
+    .left-item {
+      font-size: 10pt;
+      line-height: 1.45;
+      color: #333;
+      margin: 0 0 2.4mm;
+    }
+
+    .skills-list,
+    .lang-list,
+    .bullet-list {
+      margin: 0;
+      padding-left: 5mm;
+    }
+
+    .skills-list li,
+    .lang-list li,
+    .bullet-list li {
+      margin: 0 0 2.5mm;
+      font-size: 10.3pt;
+      line-height: 1.4;
+    }
+
+    .name {
+      margin: 0;
+      font-size: 18pt;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    .role {
+      margin: 3mm 0 8mm;
+      font-size: 12pt;
+      font-weight: 600;
+      color: #333;
+      letter-spacing: 0.3px;
+    }
+
+    .section {
+      margin-top: 7mm;
+    }
+
+    .section-title {
+      margin: 0 0 3.2mm;
+      font-size: 8.5pt;
+      letter-spacing: 2.5px;
+      color: var(--blue);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2.2mm;
+    }
+
+    .summary,
+    .exp-text {
+      margin: 0;
+      font-size: 10.3pt;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .job {
+      margin-top: 4mm;
+      padding-bottom: 3.5mm;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .job:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .period {
+      margin: 0 0 1.5mm;
+      font-size: 10pt;
+      color: #555;
+    }
+
+    .job-title {
+      margin: 0 0 2mm;
+      font-size: 13pt;
+      font-weight: 700;
+      color: #1f1f1f;
+    }
+
+    .stack {
+      margin-top: 2mm;
+      font-size: 10pt;
+      color: #444;
+      font-style: italic;
+    }
+
+    .small-muted {
+      color: var(--muted);
+      font-size: 9.5pt;
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <aside class="left">
+      <div class="photo">SK</div>
+
+      <div class="left-section">
+        <p class="contact-item"><strong>Location:</strong> Remote | Ukraine</p>
+        <p class="contact-item"><strong>Email:</strong> email</p>
+        <p class="contact-item"><strong>LinkedIn:</strong> LinkedIn</p>
+        <p class="contact-item"><strong>GitHub:</strong> GitHub</p>
+      </div>
+
+      <section class="left-section">
+        <h2 class="left-title">Core Expertise</h2>
+        <ul class="skills-list">
+          <li>Backend &amp; API Testing (REST, JSON, authentication flows)</li>
+          <li>Automation: Postman, Newman, Selenium WebDriver (JavaScript)</li>
+          <li>SQL (PostgreSQL), MongoDB - data validation</li>
+          <li>Business logic &amp; regulatory workflows</li>
+          <li>Regression strategy &amp; release quality ownership</li>
+          <li>CI/CD integration for automated tests</li>
+          <li>Debugging &amp; log analysis</li>
+        </ul>
+      </section>
+
+      <section class="left-section">
+        <h2 class="left-title">Key Skills</h2>
+        <ul class="skills-list">
+          <li>Testing: Backend/API testing, regression, exploratory, risk-based testing</li>
+          <li>Automation: Postman, Newman, Selenium</li>
+          <li>Data: PostgreSQL, MongoDB</li>
+          <li>Tech: JavaScript, Git, Docker basics</li>
+          <li>Domain: High-reliability systems, compliance-driven platforms</li>
+        </ul>
+      </section>
+
+      <section class="left-section">
+        <h2 class="left-title">Languages</h2>
+        <ul class="lang-list">
+          <li>Ukrainian - Native</li>
+          <li>English - Intermediate (B1-B2)</li>
+        </ul>
+      </section>
+    </aside>
+
+    <section class="right">
+      <h1 class="name">Serhii Kurylenko</h1>
+      <p class="role">QA Engineer - Backend / API / Data &amp; Automation</p>
+
+      <section class="section">
+        <h2 class="section-title">Professional Summary</h2>
+        <p class="summary">
+          QA Engineer with 5 years of experience in large-scale healthcare platforms and 1.5 years background as a
+          Full Stack JavaScript Developer. Specialized in backend and API testing, complex business logic validation,
+          and data integrity across distributed systems. Strong focus on risk-based testing, regression strategy,
+          and automation of critical workflows. Experienced in high-reliability systems with strict data correctness
+          and compliance requirements.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Experience</h2>
+
+        <article class="job">
+          <p class="period">2021 - Present</p>
+          <h3 class="job-title">QA Engineer - National Healthcare GovTech Platform</h3>
+          <ul class="bullet-list">
+            <li>Validated complex backend workflows in a large-scale distributed system.</li>
+            <li>Ensured correctness of critical business logic and compliance-driven rules.</li>
+            <li>Performed deep API testing across multiple backend services.</li>
+            <li>Designed and maintained regression strategy for high-risk system flows.</li>
+            <li>Built automated API regression integrated into CI pipelines, reducing manual regression effort by ~40%.</li>
+            <li>Verified data integrity and consistency at database level.</li>
+            <li>Owned release quality across multiple environments (STAGE -> PREPROD -> PROD).</li>
+            <li>Collaborated closely with business analysts to clarify requirements and quality risks.</li>
+            <li>Provided episodic mentoring to junior QA engineers.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <p class="period">~1.5 years</p>
+          <h3 class="job-title">Full Stack JavaScript Developer - Medical Systems &amp; Government Healthcare Registry</h3>
+          <ul class="bullet-list">
+            <li>Developed backend REST APIs and business logic for large-scale information systems.</li>
+            <li>Integrated databases and ensured correctness of data flows.</li>
+            <li>Worked closely with domain experts and stakeholders.</li>
+          </ul>
+          <p class="stack">Tech stack: JavaScript, Node.js, REST APIs, SQL/NoSQL databases.</p>
+        </article>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
