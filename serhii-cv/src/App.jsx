@@ -10,7 +10,6 @@ const Section = ({ title, children }) => (
   </section>
 )
 
-
 const ContactIcon = ({ name }) => {
   const icons = {
     location: (
