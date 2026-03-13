@@ -97,7 +97,7 @@ const content = {
       jobs: [
         {
           title: 'QA Engineer',
-          meta: 'National Healthcare GovTech Platform | 2021 - Present',
+          meta: 'eZdorovya - State Enterprise "Electronic Health", National eHealth System of Ukraine | 2021 - Present',
           bullets: [
             'Performed backend and API testing across 30+ REST, GraphQL, and SOAP services within a distributed healthcare platform.',
             'Validated complex business logic aligned with regulatory and compliance requirements',
@@ -198,7 +198,7 @@ const content = {
       jobs: [
         {
           title: 'QA Engineer',
-          meta: 'National Healthcare GovTech Platform | 2021 - Present',
+          meta: 'eZdorovya - State Enterprise "Electronic Health", National eHealth System of Ukraine | 2021 - Present',
           bullets: [
             'Виконував backend- та API-тестування понад 30 REST, GraphQL і SOAP сервісів у межах розподіленої healthcare-платформи.',
             'Валідував складну бізнес-логіку відповідно до регуляторних і комплаєнс-вимог',
