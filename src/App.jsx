@@ -2,6 +2,7 @@ import './App.css'
 import { useRef, useState } from 'react'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
+import { AlignmentType, BorderStyle, Document, Packer, Paragraph, TextRun } from 'docx'
 
 const Section = ({ title, children }) => (
   <section className="section">
@@ -9,6 +10,183 @@ const Section = ({ title, children }) => (
     {children}
   </section>
 )
+
+const saveBlob = (blob, filename) => {
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+}
+
+const buildDocxDocument = (current) => {
+  const headingText = (text) =>
+    new TextRun({
+      text,
+      bold: true,
+      color: '1F2933',
+      size: 23,
+    })
+
+  const sectionHeading = (title) =>
+    new Paragraph({
+      spacing: { before: 240, after: 120 },
+      border: {
+        bottom: {
+          color: 'E5E7EB',
+          style: BorderStyle.SINGLE,
+          size: 6,
+          space: 1,
+        },
+      },
+      children: [headingText(title)],
+    })
+
+  const bodyParagraph = (text, options = {}) =>
+    new Paragraph({
+      spacing: { after: 110, line: 320 },
+      children: [new TextRun({ text, size: 22 })],
+      ...options,
+    })
+
+  const bulletParagraph = (text) =>
+    new Paragraph({
+      bullet: { level: 0 },
+      spacing: { after: 70, line: 300 },
+      indent: { left: 360, hanging: 180 },
+      children: [new TextRun({ text, size: 22 })],
+    })
+
+  const children = [
+    new Paragraph({
+      alignment: AlignmentType.LEFT,
+      spacing: { after: 120 },
+      children: [
+        new TextRun({
+          text: current.name,
+          bold: true,
+          color: '2F5BD3',
+          size: 42,
+        }),
+      ],
+    }),
+    new Paragraph({
+      spacing: { after: 90 },
+      children: [
+        new TextRun({
+          text: current.role,
+          bold: true,
+          size: 25,
+        }),
+      ],
+    }),
+    new Paragraph({
+      spacing: { after: 60 },
+      children: [
+        new TextRun({
+          text: `${current.contactPrefix} | s.kurylenko.mail@gmail.com | +380 63 439 0602`,
+          size: 20,
+          color: '6B7280',
+        }),
+      ],
+    }),
+    new Paragraph({
+      spacing: { after: 180 },
+      children: [
+        new TextRun({
+          text: 'linkedin.com/in/сергій-куриленко-b25a52235 | @serhii_kurylenko',
+          size: 20,
+          color: '6B7280',
+        }),
+      ],
+    }),
+  ]
+
+  children.push(sectionHeading(current.sections.summaryTitle))
+  current.sections.summary.forEach((paragraph) => {
+    children.push(bodyParagraph(paragraph))
+  })
+
+  children.push(sectionHeading(current.sections.coreSkillsTitle))
+  current.sections.coreSkills.forEach((item) => {
+    children.push(
+      bodyParagraph(item.text, {
+        children: [
+          new TextRun({ text: `${item.title}: `, bold: true, size: 22 }),
+          new TextRun({ text: item.text, size: 22 }),
+        ],
+      }),
+    )
+  })
+
+  children.push(sectionHeading(current.sections.experienceTitle))
+  current.sections.jobs.forEach((job, index) => {
+    children.push(
+      new Paragraph({
+        spacing: { before: index === 0 ? 40 : 180, after: 40 },
+        keepNext: true,
+        children: [new TextRun({ text: job.title, bold: true, size: 26, color: '1F2933' })],
+      }),
+    )
+    children.push(
+      new Paragraph({
+        spacing: { after: 90 },
+        keepNext: true,
+        children: [new TextRun({ text: job.meta, italics: true, size: 20, color: '6B7280' })],
+      }),
+    )
+    job.bullets.forEach((bullet) => {
+      children.push(bulletParagraph(bullet))
+    })
+  })
+
+  children.push(sectionHeading(current.sections.technicalTitle))
+  current.sections.technicalBullets.forEach((item) => {
+    children.push(bulletParagraph(item))
+  })
+
+  children.push(sectionHeading(current.sections.languagesTitle))
+  current.sections.languageBullets.forEach((item) => {
+    children.push(bulletParagraph(item))
+  })
+
+  return new Document({
+    sections: [
+      {
+        properties: {
+          page: {
+            margin: {
+              top: 1080,
+              right: 1080,
+              bottom: 1080,
+              left: 1080,
+            },
+          },
+        },
+        children,
+      },
+    ],
+    styles: {
+      default: {
+        document: {
+          run: {
+            font: current.name === 'СЕРГІЙ КУРИЛЕНКО' ? 'e-Ukraine' : 'Calibri',
+            size: 22,
+            color: '2B2F36',
+          },
+          paragraph: {
+            spacing: {
+              line: 320,
+            },
+          },
+        },
+      },
+    },
+  })
+}
 
 const ContactIcon = ({ name }) => {
   const icons = {
@@ -40,10 +218,13 @@ const content = {
   en: {
     ui: {
       language: 'Language:',
-      download: 'Download PDF',
+      exportType: 'Export:',
+      download: 'Export Resume',
       exporting: 'Exporting...',
       langUa: 'Ukrainian',
       langEn: 'English',
+      exportPdf: 'PDF',
+      exportDocx: 'DOCX',
       filePrefix: 'Serhii-Kurylenko-CV',
       phoneLabel: 'Phone',
       telegramLabel: 'Telegram',
@@ -141,10 +322,13 @@ const content = {
   uk: {
     ui: {
       language: 'Мова:',
-      download: 'Завантажити PDF',
+      exportType: 'Експорт:',
+      download: 'Експортувати резюме',
       exporting: 'Експорт...',
       langUa: 'Українська',
       langEn: 'English',
+      exportPdf: 'PDF',
+      exportDocx: 'DOCX',
       filePrefix: 'Serhii-Kurylenko-CV',
       phoneLabel: 'Телефон',
       telegramLabel: 'Telegram',
@@ -243,6 +427,7 @@ const content = {
 
 export default function App() {
   const [lang, setLang] = useState('en')
+  const [exportFormat, setExportFormat] = useState('pdf')
   const [isExporting, setIsExporting] = useState(false)
   const [isPdfMode, setIsPdfMode] = useState(false)
   const resumeRef = useRef(null)
@@ -311,6 +496,31 @@ export default function App() {
     }
   }
 
+  const handleExportDocx = async () => {
+    const doc = buildDocxDocument(current)
+    const blob = await Packer.toBlob(doc)
+    saveBlob(blob, `${current.ui.filePrefix}-${lang.toUpperCase()}.docx`)
+  }
+
+  const handleExportResume = async () => {
+    if (isExporting) return
+
+    setIsExporting(true)
+    try {
+      if (exportFormat === 'pdf') {
+        await handleExportPdf()
+        return
+      }
+
+      if (exportFormat === 'docx') {
+        await handleExportDocx()
+        return
+      }
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   return (
     <div className="page">
       <div className="actions">
@@ -327,7 +537,20 @@ export default function App() {
           <option value="en">{current.ui.langEn}</option>
         </select>
 
-        <button className="print-btn" type="button" onClick={handleExportPdf} disabled={isExporting}>
+        <label className="paper-label" htmlFor="export-format-select">
+          {current.ui.exportType}
+        </label>
+        <select
+          id="export-format-select"
+          className="paper-select"
+          value={exportFormat}
+          onChange={(event) => setExportFormat(event.target.value)}
+        >
+          <option value="pdf">{current.ui.exportPdf}</option>
+          <option value="docx">{current.ui.exportDocx}</option>
+        </select>
+
+        <button className="print-btn" type="button" onClick={handleExportResume} disabled={isExporting}>
           {isExporting ? current.ui.exporting : current.ui.download}
         </button>
       </div>
