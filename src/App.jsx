@@ -29,7 +29,9 @@ const buildDocxDocument = (current) => {
       bold: true,
       color: '1F2933',
       size: 23,
-    });
+    })
+
+    
 
   const sectionHeading = (title) =>
     new Paragraph({
