@@ -9,36 +9,98 @@
   margin: 0 auto 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: flex-end;
 }
 
-.paper-label {
-  font-size: 10.5pt;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.select-shell {
+  position: relative;
+  min-width: 178px;
+}
+
+.select-icon,
+.select-chevron {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--meta-soft-gray);
-  font-weight: 600;
+  pointer-events: none;
+}
+
+.select-icon {
+  left: 12px;
+}
+
+.select-chevron {
+  right: 12px;
+}
+
+.toolbar-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  fill: currentColor;
 }
 
 .paper-select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
   border: 1px solid var(--line-light-gray);
   background: var(--surface);
   color: var(--text-dark-gray);
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 10px 38px 10px 38px;
+  border-radius: 12px;
   font-size: 10.5pt;
-  font-weight: 500;
-  
+  font-weight: 600;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.paper-select:hover,
+.paper-select:focus {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  outline: none;
 }
 
 .print-btn {
   border: 1px solid var(--line-light-gray);
-  background: var(--surface);
-  color: var(--meta-soft-gray);
-  padding: 9px 15px;
-  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  color: var(--section-charcoal);
+  padding: 10px 16px;
+  border-radius: 12px;
   font-size: 10.5pt;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.print-btn:hover,
+.print-btn:focus {
+  border-color: #cbd5e1;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+  outline: none;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .print-btn:disabled {
@@ -99,42 +161,6 @@
   --content-width: 1060px;
 }
 
-.resume.pdf-mode {
-  --name-size: 24pt;
-  --role-size: 13pt;
-  --section-title-size: 11.4pt;
-  --body-size: 10.6pt;
-  --meta-size: 9.8pt;
-  --section-gap: 12px;
-  --bullet-gap: 2px;
-  padding: 0.82cm 0.62cm 0.82cm;
-}
-
-.resume.pdf-mode .section p,
-.resume.pdf-mode .section li {
-  line-height: 1.3;
-}
-
-.resume.pdf-mode .contact,
-.resume.pdf-mode .meta {
-  line-height: 1.28;
-}
-
-.resume.pdf-mode .contact-grid {
-  gap: 4px 10px;
-  margin-top: 6px;
-}
-
-.resume.pdf-mode .header {
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-}
-
-.resume.pdf-mode .section h2 {
-  margin-bottom: 6px;
-  padding-bottom: 3px;
-}
-
 .header {
   border-bottom: 1px solid var(--line-light-gray);
   padding-bottom: 12px;
@@ -155,7 +181,7 @@
   font-weight: 700;
   color: var(--section-charcoal);
   font-size: var(--role-size);
-  line-height: 1.35;
+  line-height: 1.33;
 }
 
 .contact {
@@ -172,7 +198,7 @@
   margin-top: 8px;
   font-size: var(--meta-size);
   color: var(--meta-soft-gray);
-  line-height: 1.35;
+  line-height: 1.33;
 }
 
 .contact-item {
@@ -183,7 +209,7 @@
   color: var(--meta-soft-gray);
   word-break: break-word;
   text-decoration: none;
-  line-height: 1.35;
+  line-height: 1.33;
   transition: color 0.2s ease;
 }
 
@@ -223,7 +249,7 @@
 }
 
 .section p + p {
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .skill-group + .skill-group {
@@ -241,6 +267,20 @@
   margin-top: 2px;
 }
 
+.expertise-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.pdf-bottom-grid {
+  display: grid;
+  gap: var(--section-gap);
+}
+
+.compact-section ul {
+  gap: 4px;
+}
+
 .job + .job {
   margin-top: 10px;
   padding-top: 8px;
@@ -256,7 +296,7 @@
 
 .meta {
   margin-top: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   color: var(--meta-soft-gray);
   font-size: var(--meta-size);
   font-weight: 600;
@@ -278,7 +318,7 @@ li::marker {
   position: fixed;
   left: -10000px;
   top: 0;
-  width: 1320px;
+  width: 1180px;
   pointer-events: none;
   opacity: 0;
   overflow: hidden;
@@ -286,95 +326,95 @@ li::marker {
 }
 
 .resume.pdf-capture {
-  width: 1320px !important;
-  max-width: 1320px !important;
+  --name-size: 26.2pt;
+  --role-size: 14.2pt;
+  --section-title-size: 12.3pt;
+  --body-size: 11.45pt;
+  --meta-size: 10.35pt;
+  --section-gap: 12px;
+  --bullet-gap: 2px;
+  width: 1180px !important;
+  max-width: 1180px !important;
   margin: 0;
-  padding: 0.82cm 0.62cm 0.82cm;
-  border-radius: 12px;
+  padding: 0.86cm 0.66cm 0.84cm;
   box-shadow: none;
 }
 
-.resume.pdf-capture .header h1 {
-  font-size: 24pt;
-}
-
-.resume.pdf-capture .role {
-  font-size: 13pt;
+.resume.pdf-capture .header {
+  margin-bottom: 13px;
+  padding-bottom: 9px;
 }
 
 .resume.pdf-capture .contact-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px 10px;
-  margin-top: 6px;
+  gap: 4px 11px;
+  margin-top: 7px;
+}
+
+.resume.pdf-capture .section + .section {
+  margin-top: 12px;
 }
 
 .resume.pdf-capture .section h2 {
-  margin-bottom: 6px;
-  padding-bottom: 3px;
-  font-size: 11.4pt;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
 }
 
 .resume.pdf-capture .section p,
 .resume.pdf-capture .section li,
-.resume.pdf-capture .skill-group h3,
 .resume.pdf-capture .skill-group p,
-.resume.pdf-capture .job h3 {
-  font-size: 10.6pt;
-  line-height: 1.32;
+.resume.pdf-capture .job li {
+  line-height: 1.36;
 }
 
-.resume.pdf-capture .meta,
-.resume.pdf-capture .contact,
-.resume.pdf-capture .contact-grid {
-  font-size: 9.8pt;
-  line-height: 1.28;
+.resume.pdf-capture .section p + p {
+  margin-top: 4px;
+}
+
+.resume.pdf-capture .skill-group + .skill-group {
+  margin-top: 6px;
+}
+
+.resume.pdf-capture .job + .job {
+  margin-top: 8px;
+  padding-top: 6px;
+}
+
+.resume.pdf-capture .meta {
+  margin-bottom: 4px;
+}
+
+.resume.pdf-capture .expertise-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+
+.resume.pdf-capture .pdf-bottom-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.resume.pdf-capture .compact-section {
+  break-inside: avoid;
+}
+
+.resume.pdf-capture .compact-section ul {
+  gap: 2px;
+}
+
+.resume.pdf-capture .expertise-section .skill-group {
+  break-inside: avoid;
 }
 
 @media (max-width: 640px) {
   .resume.pdf-capture {
-    width: 1320px !important;
-    max-width: 1320px !important;
-    padding: 0.82cm 0.62cm 0.82cm;
-    border-radius: 12px;
-    box-shadow: none;
-  }
-
-  .resume.pdf-capture .header {
-    padding-bottom: 8px;
-    margin-bottom: 14px;
-  }
-
-  .resume.pdf-capture .header h1 {
-    font-size: 24pt;
-    line-height: 1.12;
-  }
-
-  .resume.pdf-capture .role {
-    margin-top: 6px;
-    font-size: 13pt;
-    line-height: 1.3;
+    width: 1180px !important;
+    max-width: 1180px !important;
+    padding: 1.02cm 0.82cm 0.98cm;
   }
 
   .resume.pdf-capture .contact-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 10px;
-  }
-
-  .resume.pdf-capture .contact-item {
-    align-items: center;
-  }
-
-  .resume.pdf-capture .section + .section {
-    margin-top: 13px;
-  }
-
-  .resume.pdf-capture .section h2 {
-    font-size: 11.4pt;
-    letter-spacing: 0.08em;
-  }
-
-  .resume.pdf-capture ul {
-    padding-left: 18px;
+    gap: 4px 11px;
   }
 }
 
@@ -398,7 +438,7 @@ li::marker {
   }
 
   .role {
-    font-size: 12pt;
+    font-size: 12.7pt;
   }
 }
 
@@ -414,7 +454,7 @@ li::marker {
     flex-direction: column;
   }
 
-  .paper-select,
+  .select-shell,
   .print-btn {
     width: 100%;
   }
@@ -439,7 +479,7 @@ li::marker {
   .role {
     margin-top: 8px;
     font-size: 11.5pt;
-    line-height: 1.3;
+    line-height: 1.29;
   }
 
   .contact-grid {
@@ -456,7 +496,7 @@ li::marker {
   }
 
   .section h2 {
-    font-size: 11pt;
+    font-size: 12.2pt;
     letter-spacing: 0.06em;
   }
 
@@ -493,7 +533,7 @@ li::marker {
   }
 
   .section h2 {
-    font-size: 10.6pt;
+    font-size: 12.2pt;
   }
 }
 
@@ -524,7 +564,7 @@ li::marker {
   }
 
   .contact-grid {
-    gap: 4px 10px;
+    gap: 3px 9px;
   }
 
   .resume.paper-letter {
