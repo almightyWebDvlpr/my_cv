@@ -150,6 +150,16 @@ const buildDocxDocument = (current) => {
     children.push(bulletParagraph(item))
   })
 
+  children.push(sectionHeading(current.sections.testingApproachTitle))
+  current.sections.testingApproachBullets.forEach((item) => {
+    children.push(bulletParagraph(item))
+  })
+
+  children.push(sectionHeading(current.sections.domainExperienceTitle))
+  current.sections.domainExperienceBullets.forEach((item) => {
+    children.push(bulletParagraph(item))
+  })
+
   children.push(sectionHeading(current.sections.languagesTitle))
   current.sections.languageBullets.forEach((item) => {
     children.push(bulletParagraph(item))
@@ -237,84 +247,107 @@ const content = {
     sections: {
       summaryTitle: 'PROFESSIONAL SUMMARY',
       summary: [
-        'QA Engineer with 5+ years of experience in healthcare and regulated platforms, specializing in backend and API testing within distributed systems.',
-        'Strong expertise in REST, GraphQL, and SOAP API validation, microservices-based architectures, database verification, and risk-based testing strategies.',
-        'Experienced in environments requiring high levels of data integrity, transactional consistency, and release quality ownership. Background in backend development (Node.js), enabling a deep understanding of system architecture and business logic.',
+        'QA Engineer with 5+ years of experience ensuring quality, reliability, and data integrity in distributed, regulated healthcare systems.',
+        'Specialize in backend/API testing, frontend validation, cross-service data consistency, and building scalable automated regression pipelines.',
+        'Focused on preventing production incidents, ensuring end-to-end system reliability, and reducing business risk through early defect detection.',
+        'Act as a technical reference point for complex issues, accelerating root cause analysis and improving release stability across environments.',
+        'Background in Node.js development enables deep understanding of backend architecture, integrations, and failure points in distributed systems.',
       ],
-      coreSkillsTitle: 'CORE SKILLS',
+      coreSkillsTitle: 'TECHNICAL EXPERTISE',
       coreSkills: [
         {
           title: 'Backend & API Testing',
-          text: 'REST, GraphQL, SOAP APIs, JSON/XML validation, authentication flows, negative testing, edge-case scenarios.',
+          text: 'REST, GraphQL, SOAP, authentication/authorization flows. Regression testing (functional & integration), negative testing, edge cases. Contract validation, API consistency checks',
         },
         {
-          title: 'Web & UI Testing',
-          text: 'Cross-platform web applications, UI/UX validation, browser compatibility testing, functional UI testing, network request inspection using browser developer tools.',
+          title: 'Frontend Testing & Validation',
+          text: 'UI/UX validation, cross-browser testing, DevTools (network/debugging), integration testing (UI ↔ API), DOM inspection',
         },
         {
-          title: 'Automation',
-          text: 'Postman, Newman, API regression automation, Selenium WebDriver (JavaScript), CI/CD integration.',
+          title: 'Data Integrity & Validation',
+          text: 'PostgreSQL, MongoDB, cross-service consistency checks, transactional validation',
         },
         {
-          title: 'Database & Data Validation',
-          text: 'PostgreSQL, MongoDB, SQL queries, data consistency checks, data integrity verification.',
+          title: 'Automation & Engineering',
+          text: 'Postman (advanced scripting for workflow automation, dynamic test flows, data-driven testing, Visualizer), Newman (CLI execution for automated runs), Python test automation frameworks (Cucumber / BDD), test framework maintenance and support, CI/CD integration and support for Python-based automation framework',
         },
         {
-          title: 'Testing Methodologies',
-          text: 'Risk-based testing, regression testing, integration testing, exploratory testing, release validation.',
+          title: 'Complex Scenario Testing & Simulation',
+          text: 'Simulation of real-world business scenarios and edge conditions. Reproducing production-like situations to identify hidden defects. Testing non-standard and critical scenarios in distributed systems',
+        },
+        {
+          title: 'Debugging & Observability',
+          text: 'Log analysis (Kibana), network tracing, distributed systems debugging, root cause analysis',
+        },
+        {
+          title: 'Architecture & Systems',
+          text: 'Microservices (~8 services), distributed systems, async workflows, government integrations (Trembita)',
         },
         {
           title: 'Tools & Technologies',
-          text: 'JavaScript, Node.js, Git, Docker (basic), CI/CD pipelines, log analysis using Kibana.',
-        },
-        {
-          title: 'Integrations & Platforms',
-          text: 'Government interoperability platform (Trembita), distributed microservices architectures.',
-        },
-        {
-          title: 'Domain Experience',
-          text: 'Healthcare systems, GovTech platforms, regulated and high-reliability environments.',
+          text: 'JavaScript (Node.js), Python (test automation), Git, Docker (basic), Chrome DevTools',
         },
       ],
       experienceTitle: 'PROFESSIONAL EXPERIENCE',
       jobs: [
         {
           title: 'QA Engineer',
-          meta: 'eZdorovya - State Enterprise "Electronic Health", National eHealth System of Ukraine | 2021 - Present',
+          meta: 'State Enterprise "Electronic Health" (eZdorovya), National eHealth System of Ukraine | 2021 - Present',
           bullets: [
-            'Performed backend and API testing across 30+ REST, GraphQL, and SOAP services within a distributed healthcare platform.',
-            'Validated complex business logic aligned with regulatory and compliance requirements',
-            'Performed quality assurance and validation of healthcare provider records within central registries (MIS), ensuring data accuracy, regulatory compliance, and integrity across integrated systems.',
-            'Tested integrations with the Trembita government interoperability platform for secure cross-system data exchange.',
-            'Designed and maintained a risk-based regression testing strategy for critical system workflows.',
-            'Built automated API regression suites using Postman and Newman, integrated into CI/CD pipelines, reducing manual regression effort by ~40%.',
-            'Executed database-level validation using PostgreSQL and MongoDB to ensure data integrity across services.',
-            'Tested authentication and authorization flows for secure API access.',
-            'Investigated production defects through log analysis in Kibana, tracing issues across distributed services and API interactions.',
-            'Owned release quality across STAGE, PREPROD, and PROD environments.',
-            'Collaborated closely with business analysts and developers to clarify requirements and mitigate quality risks.',
-            'Provided mentoring and guidance to junior QA engineers.',
+            'Owned backend/API and frontend quality across 30+ APIs and ~8 microservices, ensuring stable integrations and consistent user-facing behavior.',
+            'Ensured release stability across STAGE / PREPROD / PROD, supporting up to 8 releases per cycle.',
+            'Validated complex business logic in regulated and compliance-heavy environment.',
+            'Performed end-to-end testing (UI ↔ API ↔ database), ensuring full system integrity.',
+            'Performed regression testing (functional and integration) across backend services, ensuring stability of critical workflows.',
+            'Simulated complex and edge-case scenarios to reproduce production-like conditions and identify hidden defects in distributed systems.',
+            'Built API automation workflows using Postman (advanced scripting) and Newman for CLI execution, reducing manual regression by ~40%.',
+            'Supported and maintained Python-based BDD automation framework (Cucumber), including CI/CD integration and stability improvements.',
+            'Performed deep data validation across PostgreSQL and MongoDB, ensuring consistency between services.',
+            'Investigated production-critical defects, performing root cause analysis across distributed systems.',
+            'Improved logging and debugging workflows in Postman and browser DevTools, reducing investigation time.',
+            'Developed internal tools/scripts for test data generation and validation, accelerating QA processes.',
+            'Tested authentication and authorization mechanisms for secure API access.',
+            'Acted as a go-to engineer for complex integration and production issues.',
+            'Collaborated with developers and business analysts to challenge requirements and prevent defects early.',
+            'Mentored junior QA engineers and contributed to QA process improvements.',
           ],
         },
         {
           title: 'Full Stack JavaScript Developer',
-          meta: 'Medical Systems & Government Healthcare Registry | ~1.5 years',
+          meta: 'Healthcare Systems / Government Registries | ~1.5 years',
           bullets: [
-            'Developed RESTful APIs using Node.js for medical information systems.',
-            'Implemented backend business logic supporting regulated healthcare workflows.',
-            'Integrated SQL and NoSQL databases, ensuring reliable and consistent data flows.',
-            'Participated in requirement analysis and technical design discussions with stakeholders.',
+            'Developed RESTful APIs using Node.js.',
+            'Implemented backend business logic for regulated healthcare workflows.',
+            'Worked with frontend components and integrations.',
+            'Integrated SQL and NoSQL databases ensuring reliable and consistent data flows.',
+            'Participated in system design and requirements analysis.',
           ],
         },
       ],
-      technicalTitle: 'TECHNICAL SKILLS',
+      technicalTitle: 'KEY IMPACT',
       technicalBullets: [
-        'Testing: Backend testing, web application testing, REST / GraphQL / SOAP APIs, regression, integration, exploratory, risk-based testing.',
-        'Automation: Postman, Newman, Selenium WebDriver.',
-        'Databases: PostgreSQL, MongoDB.',
-        'Technologies: JavaScript, Node.js, REST APIs, Git, Docker (basic), CI/CD pipelines.',
-        'Systems: Microservices architectures, distributed platforms, government integrations.',
-        'Monitoring & Debugging: Log analysis using Kibana.',
+        'Reduced manual regression effort by ~40% through API automation',
+        'Improved end-to-end system reliability (UI ↔ API ↔ DB)',
+        'Improved data consistency across distributed services',
+        'Increased release stability across STAGE / PREPROD / PROD environments',
+        'Accelerated debugging and issue resolution',
+        'Contributed to stability of BDD-based automation framework',
+        'Acted as a go-to engineer for complex production and integration issues',
+      ],
+      testingApproachTitle: 'TESTING APPROACH',
+      testingApproachBullets: [
+        'Risk-based testing',
+        'Integration & regression testing',
+        'Exploratory testing',
+        'Data-driven validation',
+        'End-to-end system validation',
+        'Production-focused quality assurance',
+      ],
+      domainExperienceTitle: 'DOMAIN EXPERIENCE',
+      domainExperienceBullets: [
+        'Healthcare systems',
+        'GovTech platforms',
+        'Regulated and high-reliability environments',
       ],
       languagesTitle: 'LANGUAGES',
       languageBullets: ['Ukrainian - Native', 'English - Intermediate (B1-B2)'],
@@ -328,7 +361,7 @@ const content = {
       download: 'Експортувати резюме',
       exporting: 'Експорт...',
       langUa: 'Українська',
-      langEn: 'English',
+      langEn: 'Англійська',
       exportPdf: 'PDF',
       exportDocx: 'DOCX',
       filePrefix: 'Serhii-Kurylenko-CV',
@@ -336,89 +369,112 @@ const content = {
       telegramLabel: 'Telegram',
     },
     name: 'СЕРГІЙ КУРИЛЕНКО',
-    role: 'QA Engineer - Backend / API / Дані та автоматизація',
+    role: 'Інженер із забезпечення якості - Backend / API / Дані та автоматизація',
     contactPrefix: 'Віддалено | Україна',
     sections: {
       summaryTitle: 'ПРОФЕСІЙНЕ РЕЗЮМЕ',
       summary: [
-        'QA Engineer із понад 5 роками досвіду в охороні здоров’я та на регульованих платформах, спеціалізуюся на backend- та API-тестуванні в межах розподілених систем.',
-        'Маю сильну експертизу у валідації REST, GraphQL і SOAP API, тестуванні мікросервісних архітектур, перевірці баз даних і застосуванні ризик-орієнтованих стратегій тестування.',
-        'Працюю в середовищах із високими вимогами до цілісності даних, транзакційної узгодженості та відповідальності за якість релізів. Досвід backend-розробки (Node.js) забезпечує глибоке розуміння системної архітектури та бізнес-логіки.',
+        'QA Engineer із понад 5 роками досвіду забезпечення якості, надійності та цілісності даних у розподілених регульованих системах охорони здоров’я.',
+        'Спеціалізуюся на тестуванні backend/API, валідації frontend-рішень, перевірці узгодженості даних між сервісами та побудові масштабованих автоматизованих регресійних конвеєрів.',
+        'Зосереджений на запобіганні інцидентам у продуктивному середовищі, забезпеченні наскрізної надійності системи та зниженні бізнес-ризиків завдяки ранньому виявленню дефектів.',
+        'Виступаю технічною опорною точкою у вирішенні складних проблем, пришвидшую аналіз першопричин і підвищую стабільність релізів у різних середовищах.',
+        'Досвід розробки на Node.js забезпечує глибоке розуміння архітектури backend-систем, інтеграцій і типових точок відмови в розподілених системах.',
       ],
-      coreSkillsTitle: 'КЛЮЧОВІ НАВИЧКИ',
+      coreSkillsTitle: 'ТЕХНІЧНА ЕКСПЕРТИЗА',
       coreSkills: [
         {
           title: 'Backend та API-тестування',
-          text: 'REST, GraphQL, SOAP API, валідація JSON/XML, перевірка сценаріїв автентифікації, негативне тестування, тестування граничних випадків.',
+          text: 'REST, GraphQL, SOAP, сценарії автентифікації та авторизації. Регресійне тестування (функціональне та інтеграційне), негативне тестування, граничні випадки. Валідація контрактів, перевірка узгодженості API',
         },
         {
-          title: 'Web та UI-тестування',
-          text: 'Кросплатформні вебзастосунки, валідація UI/UX, перевірка браузерної сумісності, функціональне UI-тестування, аналіз мережевих запитів через інструменти розробника браузера.',
+          title: 'Frontend-тестування та валідація',
+          text: 'Валідація UI/UX, кросбраузерне тестування, DevTools (мережа та налагодження), інтеграційне тестування (UI ↔ API), аналіз DOM',
         },
         {
-          title: 'Автоматизація',
-          text: 'Postman, Newman, автоматизація API-регресії, Selenium WebDriver (JavaScript), інтеграція з CI/CD.',
+          title: 'Цілісність даних та валідація',
+          text: 'PostgreSQL, MongoDB, перевірка консистентності між сервісами, транзакційна валідація',
         },
         {
-          title: 'Бази даних і валідація даних',
-          text: 'PostgreSQL, MongoDB, SQL-запити, перевірка консистентності даних, верифікація цілісності даних.',
+          title: 'Автоматизація та інженерія',
+          text: 'Postman (розширене скриптування для автоматизації процесів тестування, динамічних сценаріїв, перевірок на основі даних, Visualizer), Newman (CLI-запуск автоматизованих прогонів), Python-фреймворки тестової автоматизації (Cucumber / BDD), підтримка й розвиток тестового фреймворку, інтеграція та супровід Python-фреймворку автоматизації в CI/CD',
         },
         {
-          title: 'Методології тестування',
-          text: 'Ризик-орієнтоване тестування, регресійне тестування, інтеграційне тестування, дослідницьке тестування, валідація релізів.',
+          title: 'Тестування складних сценаріїв та моделювання',
+          text: 'Моделювання реальних бізнес-сценаріїв і граничних умов. Відтворення умов, наближених до продуктивного середовища, для виявлення прихованих дефектів. Тестування нестандартних і критичних сценаріїв у розподілених системах',
+        },
+        {
+          title: 'Налагодження та спостережуваність',
+          text: 'Аналіз логів (Kibana), трасування мережевих взаємодій, налагодження розподілених систем, аналіз першопричин',
+        },
+        {
+          title: 'Архітектура та системи',
+          text: 'Мікросервіси (~8 сервісів), розподілені системи, асинхронні процеси, державні інтеграції (Трембіта)',
         },
         {
           title: 'Інструменти та технології',
-          text: 'JavaScript, Node.js, Git, Docker (базовий рівень), CI/CD-пайплайни, аналіз логів у Kibana.',
-        },
-        {
-          title: 'Інтеграції та платформи',
-          text: 'Державна платформа взаємодії (Трембіта), розподілені мікросервісні архітектури.',
-        },
-        {
-          title: 'Доменний досвід',
-          text: 'Системи охорони здоров’я, GovTech-платформи, регульовані та високонадійні середовища.',
+          text: 'JavaScript (Node.js), Python (тестова автоматизація), Git, Docker (базовий рівень), Chrome DevTools',
         },
       ],
       experienceTitle: 'ПРОФЕСІЙНИЙ ДОСВІД',
       jobs: [
         {
           title: 'QA Engineer',
-          meta: 'eZdorovya - State Enterprise "Electronic Health", National eHealth System of Ukraine | 2021 - Present',
+          meta: 'ДП "Електронне здоров’я" (eZdorovya), Національна електронна система охорони здоров’я України | 2021 - дотепер',
           bullets: [
-            'Виконував backend- та API-тестування понад 30 REST, GraphQL і SOAP сервісів у межах розподіленої healthcare-платформи.',
-            'Валідував складну бізнес-логіку відповідно до регуляторних і комплаєнс-вимог',
-            'Забезпечував контроль якості та валідацію записів про надавачів медичних послуг у центральних реєстрах (MIS), гарантуючи точність даних, відповідність регуляторним вимогам і цілісність даних у межах інтегрованих систем.',
-            'Тестував інтеграції з державною платформою взаємодії Трембіта для безпечного міжсистемного обміну даними.',
-            'Розробив і підтримував ризик-орієнтовану стратегію регресійного тестування для критичних системних процесів.',
-            'Побудував автоматизовані API-регресійні набори на Postman і Newman з інтеграцією в CI/CD, скоротивши обсяг ручної регресії приблизно на 40%.',
-            'Проводив валідацію на рівні БД за допомогою PostgreSQL і MongoDB для забезпечення цілісності даних між сервісами.',
-            'Тестував сценарії автентифікації та авторизації для захищеного доступу до API.',
-            'Досліджував production-дефекти через аналіз логів у Kibana, відстежуючи проблеми між розподіленими сервісами та API-взаємодіями.',
-            'Відповідав за якість релізів у середовищах STAGE, PREPROD та PROD.',
-            'Тісно співпрацював із бізнес-аналітиками та розробниками для уточнення вимог і зниження якісних ризиків.',
-            'Надавав менторську підтримку та практичні рекомендації молодшим QA-інженерам.',
+            'Відповідав за якість backend/API та frontend-рішень у межах 30+ API і ~8 мікросервісів, забезпечуючи стабільність інтеграцій і послідовну поведінку користувацьких сценаріїв.',
+            'Забезпечував стабільність релізів у середовищах STAGE / PREPROD / PROD, підтримуючи до 8 релізів у межах одного циклу.',
+            'Валідував складну бізнес-логіку в регульованому середовищі з високими комплаєнс-вимогами.',
+            'Проводив наскрізне тестування (UI ↔ API ↔ база даних), забезпечуючи повну цілісність системи.',
+            'Виконував регресійне тестування (функціональне та інтеграційне) backend-сервісів, забезпечуючи стабільність критичних процесів.',
+            'Моделював складні та граничні сценарії, відтворюючи умови, наближені до продуктивного середовища, для виявлення прихованих дефектів у розподілених системах.',
+            'Побудував автоматизовані API-процеси на базі Postman (розширене скриптування) і Newman для CLI-запуску, скоротивши обсяг ручної регресії приблизно на 40%.',
+            'Підтримував і розвивав BDD-фреймворк автоматизації на Python (Cucumber), включно з інтеграцією в CI/CD та підвищенням його стабільності.',
+            'Проводив глибоку валідацію даних у PostgreSQL і MongoDB, забезпечуючи узгодженість між сервісами.',
+            'Досліджував критичні дефекти продуктивного середовища, виконуючи аналіз першопричин у розподілених системах.',
+            'Покращував процеси логування та налагодження в Postman і браузерних DevTools, скорочуючи час розслідування дефектів.',
+            'Розробляв внутрішні інструменти та скрипти для генерації й валідації тестових даних, прискорюючи QA-процеси.',
+            'Тестував механізми автентифікації та авторизації для безпечного доступу до API.',
+            'Був основним технічним фахівцем для вирішення складних інтеграційних проблем та інцидентів у продуктивному середовищі.',
+            'Працював разом із розробниками та бізнес-аналітиками над критичним переглядом вимог і раннім запобіганням дефектам.',
+            'Менторив молодших QA-інженерів і долучався до вдосконалення QA-процесів.',
           ],
         },
         {
           title: 'Full Stack JavaScript Developer',
-          meta: 'Medical Systems & Government Healthcare Registry | ~1.5 years',
+          meta: 'Системи охорони здоров’я / державні реєстри | ~1,5 року',
           bullets: [
-            'Розробляв RESTful API на Node.js для медичних інформаційних систем.',
-            'Імплементував backend-бізнес-логіку для регульованих процесів у сфері охорони здоров’я.',
+            'Розробляв RESTful API на Node.js.',
+            'Реалізовував backend-бізнес-логіку для регульованих процесів у сфері охорони здоров’я.',
+            'Працював із frontend-компонентами та інтеграціями.',
             'Інтегрував SQL- і NoSQL-бази даних, забезпечуючи надійні та узгоджені потоки даних.',
-            'Брав участь в аналізі вимог і технічному проєктуванні разом зі стейкхолдерами.',
+            'Брав участь у проєктуванні системи та аналізі вимог.',
           ],
         },
       ],
-      technicalTitle: 'ТЕХНІЧНІ НАВИЧКИ',
+      technicalTitle: 'КЛЮЧОВИЙ ВПЛИВ',
       technicalBullets: [
-        'Тестування: backend-тестування, тестування вебзастосунків, REST / GraphQL / SOAP API, регресійне, інтеграційне, дослідницьке, ризик-орієнтоване тестування.',
-        'Автоматизація: Postman, Newman, Selenium WebDriver.',
-        'Бази даних: PostgreSQL, MongoDB.',
-        'Технології: JavaScript, Node.js, REST API, Git, Docker (базовий рівень), CI/CD-пайплайни.',
-        'Системи: мікросервісні архітектури, розподілені платформи, державні інтеграції.',
-        'Моніторинг і налагодження: аналіз логів у Kibana.',
+        'Скоротив обсяг ручної регресії приблизно на 40% завдяки API-автоматизації',
+        'Покращив наскрізну надійність системи (UI ↔ API ↔ DB)',
+        'Підвищив узгодженість даних між розподіленими сервісами',
+        'Підвищив стабільність релізів у середовищах STAGE / PREPROD / PROD',
+        'Прискорив налагодження та вирішення інцидентів',
+        'Зробив внесок у стабільність BDD-фреймворку автоматизації',
+        'Був ключовим технічним фахівцем у вирішенні складних виробничих та інтеграційних інцидентів',
+      ],
+      testingApproachTitle: 'ПІДХІД ДО ТЕСТУВАННЯ',
+      testingApproachBullets: [
+        'Ризик-орієнтоване тестування',
+        'Інтеграційне та регресійне тестування',
+        'Дослідницьке тестування',
+        'Валідація на основі даних',
+        'Наскрізна валідація системи',
+        'Забезпечення якості з фокусом на продуктивне середовище',
+      ],
+      domainExperienceTitle: 'ДОМЕННИЙ ДОСВІД',
+      domainExperienceBullets: [
+        'Системи охорони здоров’я',
+        'GovTech-платформи',
+        'Регульовані та високонадійні середовища',
       ],
       languagesTitle: 'МОВИ',
       languageBullets: ['Українська - рідна', 'Англійська - середній рівень (B1-B2)'],
@@ -447,8 +503,8 @@ export default function App() {
       await new Promise((resolve) => requestAnimationFrame(() => resolve()))
       const exportNode = resumeRef.current.cloneNode(true)
       exportNode.classList.add('pdf-capture')
-      exportNode.style.width = '1020px'
-      exportNode.style.maxWidth = '1020px'
+      exportNode.style.width = '1320px'
+      exportNode.style.maxWidth = '1320px'
 
       exportHost = document.createElement('div')
       exportHost.className = 'pdf-export-host'
@@ -471,10 +527,11 @@ export default function App() {
 
       const pageWidth = pdf.internal.pageSize.getWidth()
       const pageHeight = pdf.internal.pageSize.getHeight()
+      const horizontalMargin = 6
       const verticalMargin = 4
-      let renderWidth = pageWidth
-      let renderHeight = (canvas.height * pageWidth) / canvas.width
-      let x = 0
+      let renderWidth = pageWidth - horizontalMargin * 2
+      let renderHeight = (canvas.height * renderWidth) / canvas.width
+      let x = horizontalMargin
       let y = verticalMargin
 
       const maxHeight = pageHeight - verticalMargin * 2
@@ -631,6 +688,22 @@ export default function App() {
         <Section title={current.sections.technicalTitle}>
           <ul>
             {current.sections.technicalBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title={current.sections.testingApproachTitle}>
+          <ul>
+            {current.sections.testingApproachBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section title={current.sections.domainExperienceTitle}>
+          <ul>
+            {current.sections.domainExperienceBullets.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
