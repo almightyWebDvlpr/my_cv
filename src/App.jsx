@@ -5,9 +5,11 @@ import { exportDocx, exportStyledPdf } from './utils/exportResume'
 
 const LANGUAGE_STORAGE_KEY = 'cv-language'
 const OWNER_MODE_STORAGE_KEY = 'cv-owner-mode'
+const ANALYTICS_STORAGE_KEY = 'cv-goatcounter-total'
 const GOATCOUNTER_CODE = import.meta.env.VITE_GOATCOUNTER_CODE?.trim() ?? ''
 const GOATCOUNTER_ENDPOINT = GOATCOUNTER_CODE ? `https://${GOATCOUNTER_CODE}.goatcounter.com` : ''
-const GOATCOUNTER_COUNTER_URL = GOATCOUNTER_ENDPOINT ? `${GOATCOUNTER_ENDPOINT}/counter/TOTAL.svg?no_branding=1` : ''
+const GOATCOUNTER_JSON_URL = GOATCOUNTER_ENDPOINT ? `${GOATCOUNTER_ENDPOINT}/counter/TOTAL.json?no_branding=1` : ''
+const GOATCOUNTER_SCRIPT_URL = 'https://gc.zgo.at/count.js'
 
 const ENGINE_UI = {
   en: {
@@ -18,6 +20,8 @@ const ENGINE_UI = {
     analytics: 'Global visits',
     analyticsPending: 'Loading…',
     analyticsUnavailable: 'Connect GoatCounter',
+    analyticsLive: 'Live total pageviews',
+    analyticsFallback: 'Waiting for GoatCounter',
   },
   uk: {
     language: 'Мова',
@@ -27,6 +31,8 @@ const ENGINE_UI = {
     analytics: 'Глобальні візити',
     analyticsPending: 'Завантаження…',
     analyticsUnavailable: 'Підключіть GoatCounter',
+    analyticsLive: 'Загальна кількість переглядів',
+    analyticsFallback: 'Очікування відповіді GoatCounter',
   },
 }
 
@@ -85,7 +91,13 @@ const getInitialLanguage = () => {
 
 const getInitialOwnerMode = () => {
   if (typeof window === 'undefined') return false
-  return window.localStorage.getItem(OWNER_MODE_STORAGE_KEY) === 'true'
+  const rawValue = (window.localStorage.getItem(OWNER_MODE_STORAGE_KEY) || '').trim().toLowerCase()
+  return rawValue === 'так'
+}
+
+const getInitialAnalyticsCount = () => {
+  if (typeof window === 'undefined') return ''
+  return window.localStorage.getItem(ANALYTICS_STORAGE_KEY) || ''
 }
 
 const setMetaTag = (name, content, attribute = 'name') => {
@@ -225,6 +237,8 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('summary')
   const [navLockId, setNavLockId] = useState('')
   const [isOwnerModeActive] = useState(getInitialOwnerMode)
+  const [analyticsValue, setAnalyticsValue] = useState(getInitialAnalyticsCount)
+  const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(Boolean(GOATCOUNTER_JSON_URL) && getInitialOwnerMode() && !getInitialAnalyticsCount())
   const visibleResumeRef = useRef(null)
   const sectionNodesRef = useRef({})
   const navLockTimerRef = useRef(null)
@@ -268,7 +282,105 @@ export default function App() {
     setMetaTag('twitter:description', current.ui.seoDescription)
   }, [current, lang])
 
+  useEffect(() => {
+    if (!GOATCOUNTER_ENDPOINT) return undefined
 
+    window.goatcounter = { ...(window.goatcounter ?? {}), allow_local: true }
+
+    const existingScript = document.querySelector(`script[data-goatcounter="${GOATCOUNTER_ENDPOINT}/count"]`)
+    if (existingScript) return undefined
+
+    const script = document.createElement('script')
+    script.async = true
+    script.dataset.goatcounter = `${GOATCOUNTER_ENDPOINT}/count`
+    script.src = GOATCOUNTER_SCRIPT_URL
+    document.body.appendChild(script)
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isOwnerModeActive || !GOATCOUNTER_JSON_URL) {
+      setIsAnalyticsLoading(false)
+      return undefined
+    }
+
+    const controller = new AbortController()
+    const cached = window.localStorage.getItem(ANALYTICS_STORAGE_KEY) || ''
+    let attempts = 0
+    let retryTimer
+    let refreshTimer
+
+    if (cached) {
+      setAnalyticsValue(cached)
+      setIsAnalyticsLoading(false)
+    } else {
+      setIsAnalyticsLoading(true)
+    }
+
+    const scheduleRefresh = () => {
+      if (controller.signal.aborted) return
+      refreshTimer = window.setTimeout(() => {
+        attempts = 0
+        loadCount(false)
+      }, 30000)
+    }
+
+    const loadCount = async (showLoader = false) => {
+      attempts += 1
+
+      if (showLoader && !analyticsValue) {
+        setIsAnalyticsLoading(true)
+      }
+
+      try {
+        const response = await fetch(`${GOATCOUNTER_JSON_URL}&_=${Date.now()}`, {
+          signal: controller.signal,
+          headers: { Accept: 'application/json' },
+          cache: 'no-store',
+          mode: 'cors',
+        })
+
+        if (!response.ok) throw new Error(`GoatCounter responded with ${response.status}`)
+
+        const data = await response.json()
+        const rawCount = typeof data.count === 'number' ? String(data.count) : typeof data.count === 'string' ? data.count.trim() : ''
+        if (!rawCount) throw new Error('GoatCounter returned an empty count')
+
+        window.localStorage.setItem(ANALYTICS_STORAGE_KEY, rawCount)
+        setAnalyticsValue(rawCount)
+        setIsAnalyticsLoading(false)
+        scheduleRefresh()
+        return
+      } catch (error) {
+        if (error.name === 'AbortError') return
+
+        if (cached) {
+          setAnalyticsValue(cached)
+        }
+
+        if (attempts < 4) {
+          retryTimer = window.setTimeout(() => loadCount(showLoader), 1500)
+          return
+        }
+
+        setIsAnalyticsLoading(false)
+        scheduleRefresh()
+      }
+    }
+
+    loadCount(true)
+
+    return () => {
+      controller.abort()
+      if (retryTimer) window.clearTimeout(retryTimer)
+      if (refreshTimer) window.clearTimeout(refreshTimer)
+    }
+  }, [analyticsValue, isOwnerModeActive])
 
   useEffect(() => {
     let frameId = 0
@@ -388,12 +500,11 @@ export default function App() {
                 <ToolbarIcon name="views" />
                 <span>{ui.analytics}</span>
               </span>
-              <div className="analytics-badge analytics-badge-image">
-                {GOATCOUNTER_COUNTER_URL ? (
-                  <img className="analytics-counter-image" src={GOATCOUNTER_COUNTER_URL} alt={ui.analytics} loading="eager" />
-                ) : (
-                  <span>{ui.analyticsUnavailable}</span>
-                )}
+              <div className="analytics-badge analytics-badge-rich">
+                <strong className="analytics-number">{analyticsValue || '—'}</strong>
+                <span className="analytics-caption">
+                  {analyticsValue ? ui.analyticsLive : isAnalyticsLoading ? ui.analyticsPending : ui.analyticsFallback}
+                </span>
               </div>
             </div>
           ) : null}

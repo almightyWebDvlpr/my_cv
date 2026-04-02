@@ -720,17 +720,36 @@ li::marker {
   color: var(--name-blue);
 }
 
-.analytics-badge-image {
-  padding: 8px 10px;
-  background: linear-gradient(180deg, rgba(47, 91, 211, 0.04) 0%, rgba(255, 255, 255, 0.98) 100%);
+.analytics-badge-rich {
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 10px 10px;
+  background: linear-gradient(180deg, rgba(47, 91, 211, 0.05) 0%, rgba(255, 255, 255, 0.98) 100%);
 }
 
-.analytics-counter-image {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: 28px;
-  object-fit: contain;
+.analytics-number {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--name-blue);
+  letter-spacing: -0.03em;
+}
+
+.analytics-caption {
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--meta-soft-gray);
+  text-align: center;
+}
+
+.analytics-source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .mini-nav-controls {
@@ -1073,6 +1092,10 @@ li::marker {
   .mini-nav-item {
     font-size: 9pt;
     min-height: 40px;
+  }
+
+  .analytics-number {
+    font-size: 24px;
   }
 
   .header h1 {
