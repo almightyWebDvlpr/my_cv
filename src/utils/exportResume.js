@@ -1,6 +1,3 @@
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
-
 const CONTACT_LINE_1 = 's.kurylenko.mail@gmail.com | +380 63 439 0602'
 const CONTACT_LINE_2 = 'linkedin.com/in/сергій-куриленко-b25a52235 | @serhii_kurylenko'
 
@@ -49,6 +46,11 @@ export const exportStyledPdf = async ({
   const { exportNode, exportHost } = createCaptureNode({ sourceNode, captureWidth })
 
   try {
+    const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+      import('html2canvas'),
+      import('jspdf'),
+    ])
+
     const canvas = await html2canvas(exportNode, {
       scale: 2.5,
       backgroundColor: '#ffffff',

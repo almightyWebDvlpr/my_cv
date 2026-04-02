@@ -13,8 +13,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^4.1.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-pageflip": "^2.0.3"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",

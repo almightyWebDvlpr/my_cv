@@ -1,0 +1,372 @@
+.resume-stage {
+  position: relative;
+  width: min(100%, 928px);
+  margin: 0 auto;
+  perspective: 2200px;
+  transform-style: preserve-3d;
+}
+
+.resume-stage > .resume {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.resume {
+  --page-margin: 1.7cm;
+  --content-width: 1020px;
+  --name-size: 25pt;
+  --role-size: 13.5pt;
+  --section-title-size: 12pt;
+  --body-size: 11pt;
+  --meta-size: 10pt;
+  --section-gap: 18px;
+  --bullet-gap: 5px;
+  position: relative;
+  overflow: hidden;
+  max-width: 920px;
+  margin: 0 auto;
+  width: min(100%, var(--content-width));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.998) 0%, rgba(252, 254, 255, 0.988) 58%, rgba(248, 251, 255, 0.978) 100%),
+    radial-gradient(circle at top center, rgba(126, 166, 255, 0.08) 0%, rgba(255, 255, 255, 0) 34%);
+  border: 1px solid rgba(208, 218, 238, 0.92);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.11), 0 8px 22px rgba(47, 91, 211, 0.05);
+  border-radius: 18px;
+  padding: 1.5cm;
+}
+
+.resume::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(233, 238, 248, 0.86);
+  pointer-events: none;
+}
+
+.resume.lang-en {
+  font-family: var(--font-en);
+}
+
+.resume.lang-uk {
+  font-family: var(--font-uk);
+}
+
+.resume.lang-uk .section p,
+.resume.lang-uk .skill-group p,
+.resume.lang-uk .contact-item,
+.resume.lang-uk .meta {
+  font-size: 10pt;
+}
+
+.resume.lang-uk .section li {
+  font-weight: 400;
+  line-height: 1.48;
+}
+
+.resume.lang-uk .skill-group h3,
+.resume.lang-uk .job h3 {
+  font-weight: 700;
+}
+
+.resume.lang-uk .skill-group p {
+  margin-top: 5px;
+}
+
+.resume.paper-letter {
+  --content-width: 1060px;
+}
+
+.header {
+  position: relative;
+  border-bottom: 1px solid rgba(221, 228, 240, 0.94);
+  padding-bottom: 14px;
+  margin-bottom: calc(var(--section-gap) + 2px);
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(47, 91, 211, 0.12) 0%, rgba(221, 228, 240, 0.72) 18%, rgba(221, 228, 240, 0.72) 82%, rgba(47, 91, 211, 0.12) 100%);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: var(--name-size);
+  line-height: 1.1;
+  letter-spacing: 0.008em;
+  color: var(--name-blue);
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.role {
+  margin: 8px 0 0;
+  font-weight: 700;
+  color: var(--section-charcoal);
+  font-size: var(--role-size);
+  line-height: 1.32;
+  text-wrap: pretty;
+}
+
+.contact {
+  margin: 6px 0 0;
+  color: var(--meta-soft-gray);
+  font-size: var(--meta-size);
+  line-height: 1.4;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 16px;
+  margin-top: 10px;
+  font-size: var(--meta-size);
+  color: var(--meta-soft-gray);
+  line-height: 1.33;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--meta-soft-gray);
+  word-break: break-word;
+  text-decoration: none;
+  line-height: 1.33;
+  transition: color 0.2s ease;
+}
+
+.contact-item:hover {
+  color: var(--section-charcoal);
+}
+
+.contact-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  display: block;
+  overflow: visible;
+  fill: currentColor;
+}
+
+.section + .section {
+  margin-top: var(--section-gap);
+}
+
+.section-card {
+  position: relative;
+  scroll-margin-top: 110px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.pdf-bottom-grid .section-card {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.section h2 {
+  margin: 0 0 10px;
+  padding-left: 0;
+  font-size: var(--section-title-size);
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  color: var(--section-charcoal);
+  border-bottom: 1px solid rgba(225, 231, 241, 0.96);
+  padding-bottom: 5px;
+}
+
+.section p,
+.section li {
+  margin: 0;
+  font-size: var(--body-size);
+  line-height: 1.46;
+  color: var(--text-dark-gray);
+}
+
+.section p + p {
+  margin-top: 7px;
+}
+
+.skill-group + .skill-group {
+  margin-top: 10px;
+}
+
+.skill-group h3 {
+  margin: 0;
+  font-size: var(--body-size);
+  color: var(--section-charcoal);
+  font-weight: 700;
+}
+
+.skill-group p {
+  margin-top: 4px;
+}
+
+.expertise-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.pdf-bottom-grid {
+  display: grid;
+  gap: calc(var(--section-gap) + 2px);
+  margin-top: calc(var(--section-gap) + 2px);
+}
+
+.education-section .education-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.education-item {
+  min-width: 0;
+}
+
+.education-item h3 {
+  margin: 0 0 6px;
+  font-size: var(--body-size);
+  color: var(--section-charcoal);
+  font-weight: 700;
+}
+
+.education-item p + .meta {
+  margin-top: 4px;
+}
+
+.compact-section ul {
+  gap: 4px;
+}
+
+.job + .job {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(225, 231, 241, 0.96);
+}
+
+.job h3 {
+  margin: 0;
+  font-size: calc(var(--body-size) + 0.3pt);
+  color: var(--section-charcoal);
+  font-weight: 700;
+}
+
+.meta {
+  margin-top: 3px;
+  margin-bottom: 6px;
+  color: var(--meta-soft-gray);
+  font-size: var(--meta-size);
+  font-weight: 600;
+  line-height: 1.42;
+}
+
+ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: var(--bullet-gap);
+}
+
+li::marker {
+  color: var(--section-charcoal);
+}
+
+.pdf-export-host {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1180px;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.resume.pdf-capture {
+  --name-size: 26.2pt;
+  --role-size: 14.2pt;
+  --section-title-size: 12.3pt;
+  --body-size: 11.45pt;
+  --meta-size: 10.35pt;
+  --section-gap: 12px;
+  --bullet-gap: 2px;
+  width: 1180px !important;
+  max-width: 1180px !important;
+  margin: 0;
+  padding: 0.86cm 0.66cm 0.84cm;
+  box-shadow: none;
+}
+
+.resume.pdf-capture .header {
+  margin-bottom: 13px;
+  padding-bottom: 9px;
+}
+
+.resume.pdf-capture .contact-grid {
+  gap: 4px 11px;
+  margin-top: 7px;
+}
+
+.resume.pdf-capture .section + .section {
+  margin-top: 12px;
+}
+
+.resume.pdf-capture .resume.pdf-capture .section h2 {
+  margin-bottom: 5px;
+  padding-left: 0;
+  padding-bottom: 2px;
+}
+
+.resume.pdf-capture .section p,
+.resume.pdf-capture .section li,
+.resume.pdf-capture .skill-group p,
+.resume.pdf-capture .job li {
+  line-height: 1.36;
+}
+
+.resume.pdf-capture .section p + p {
+  margin-top: 4px;
+}
+
+.resume.pdf-capture .skill-group + .skill-group {
+  margin-top: 6px;
+}
+
+.resume.pdf-capture .job + .job {
+  margin-top: 8px;
+  padding-top: 6px;
+}
+
+.resume.pdf-capture .meta {
+  margin-bottom: 4px;
+}
+
+.resume.pdf-capture .expertise-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+
+.resume.pdf-capture .pdf-bottom-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.resume.pdf-capture .compact-section {
+  break-inside: avoid;
+}
+
+.resume.pdf-capture .compact-section ul {
+  gap: 2px;
+}
+
+.resume.pdf-capture .expertise-section .skill-group {
+  break-inside: avoid;
+}
