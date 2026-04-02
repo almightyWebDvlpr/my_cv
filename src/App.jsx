@@ -5,9 +5,9 @@ import { exportDocx, exportStyledPdf } from './utils/exportResume'
 
 const LANGUAGE_STORAGE_KEY = 'cv-language'
 const OWNER_MODE_STORAGE_KEY = 'cv-owner-mode'
-const ANALYTICS_STORAGE_KEY = 'cv-goatcounter-total'
 const GOATCOUNTER_CODE = import.meta.env.VITE_GOATCOUNTER_CODE?.trim() ?? ''
 const GOATCOUNTER_ENDPOINT = GOATCOUNTER_CODE ? `https://${GOATCOUNTER_CODE}.goatcounter.com` : ''
+const GOATCOUNTER_COUNTER_URL = GOATCOUNTER_ENDPOINT ? `${GOATCOUNTER_ENDPOINT}/counter/TOTAL.svg?no_branding=1` : ''
 
 const ENGINE_UI = {
   en: {
@@ -81,11 +81,6 @@ const getInitialLanguage = () => {
   if (typeof window === 'undefined') return defaultLanguage
   const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
   return stored && cvContent[stored] ? stored : defaultLanguage
-}
-
-const getInitialAnalyticsCount = () => {
-  if (typeof window === 'undefined') return ''
-  return window.localStorage.getItem(ANALYTICS_STORAGE_KEY) || ''
 }
 
 const getInitialOwnerMode = () => {
@@ -230,8 +225,6 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('summary')
   const [navLockId, setNavLockId] = useState('')
   const [isOwnerModeActive] = useState(getInitialOwnerMode)
-  const [analyticsValue, setAnalyticsValue] = useState(getInitialAnalyticsCount)
-  const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(Boolean(GOATCOUNTER_ENDPOINT) && getInitialOwnerMode() && !getInitialAnalyticsCount())
   const visibleResumeRef = useRef(null)
   const sectionNodesRef = useRef({})
   const navLockTimerRef = useRef(null)
@@ -275,91 +268,7 @@ export default function App() {
     setMetaTag('twitter:description', current.ui.seoDescription)
   }, [current, lang])
 
-  useEffect(() => {
-    if (!isOwnerModeActive || !GOATCOUNTER_ENDPOINT) {
-      setIsAnalyticsLoading(false)
-      return undefined
-    }
 
-    window.goatcounter = {
-      ...(window.goatcounter || {}),
-      allow_local: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
-    }
-
-    const host = document.querySelector('[data-analytics-host="goatcounter"]')
-    if (!host) return undefined
-
-    const commitValue = () => {
-      const raw = host.textContent?.trim() || ''
-      if (!raw) return false
-      setAnalyticsValue(raw)
-      window.localStorage.setItem(ANALYTICS_STORAGE_KEY, raw)
-      setIsAnalyticsLoading(false)
-      return true
-    }
-
-    if (analyticsValue) {
-      host.textContent = analyticsValue
-    }
-
-    const observer = new MutationObserver(() => {
-      commitValue()
-    })
-    observer.observe(host, { childList: true, subtree: true, characterData: true })
-
-    const renderVisitCount = () => {
-      if (!window.goatcounter?.visit_count) return false
-      host.innerHTML = ''
-      window.goatcounter.visit_count({
-        append: '[data-analytics-host="goatcounter"]',
-        path: 'TOTAL',
-        no_branding: true,
-        type: 'html',
-      })
-      return true
-    }
-
-    const existingScript = document.querySelector('script[data-goatcounter-app="cv-analytics"]')
-    let pollId = 0
-    let timeoutId = 0
-
-    const startPolling = () => {
-      pollId = window.setInterval(() => {
-        if (renderVisitCount()) {
-          window.clearInterval(pollId)
-        }
-      }, 120)
-    }
-
-    timeoutId = window.setTimeout(() => {
-      setIsAnalyticsLoading(false)
-      if (analyticsValue) {
-        host.textContent = analyticsValue
-      }
-    }, 2400)
-
-    if (!existingScript) {
-      const script = document.createElement('script')
-      script.async = true
-      script.src = 'https://gc.zgo.at/count.js'
-      script.dataset.goatcounter = `${GOATCOUNTER_ENDPOINT}/count`
-      script.dataset.goatcounterApp = 'cv-analytics'
-      script.addEventListener('load', () => {
-        renderVisitCount()
-        commitValue()
-      }, { once: true })
-      document.body.appendChild(script)
-      startPolling()
-    } else if (!renderVisitCount()) {
-      startPolling()
-    }
-
-    return () => {
-      observer.disconnect()
-      if (pollId) window.clearInterval(pollId)
-      if (timeoutId) window.clearTimeout(timeoutId)
-    }
-  }, [analyticsValue, isOwnerModeActive])
 
   useEffect(() => {
     let frameId = 0
@@ -479,8 +388,12 @@ export default function App() {
                 <ToolbarIcon name="views" />
                 <span>{ui.analytics}</span>
               </span>
-              <div className="analytics-badge">
-                {isAnalyticsLoading && !analyticsValue ? <span>{ui.analyticsPending}</span> : <div data-analytics-host="goatcounter">{analyticsValue || ui.analyticsUnavailable}</div>}
+              <div className="analytics-badge analytics-badge-image">
+                {GOATCOUNTER_COUNTER_URL ? (
+                  <img className="analytics-counter-image" src={GOATCOUNTER_COUNTER_URL} alt={ui.analytics} loading="eager" />
+                ) : (
+                  <span>{ui.analyticsUnavailable}</span>
+                )}
               </div>
             </div>
           ) : null}
