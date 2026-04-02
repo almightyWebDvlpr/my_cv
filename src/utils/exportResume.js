@@ -17,9 +17,17 @@ const saveBlob = (blob, filename) => {
 
 const createCaptureNode = ({ sourceNode, captureWidth }) => {
   const exportNode = sourceNode.cloneNode(true)
-  exportNode.classList.add('pdf-capture')
+  exportNode.classList.remove('export-source', 'lens-enabled')
+  exportNode.classList.add('pdf-capture', 'pdf-clean')
+  exportNode.querySelectorAll('.is-active, .is-dimmed').forEach((node) => {
+    node.classList.remove('is-active', 'is-dimmed')
+  })
   exportNode.style.width = `${captureWidth}px`
   exportNode.style.maxWidth = `${captureWidth}px`
+  exportNode.style.opacity = '1'
+  exportNode.style.position = 'static'
+  exportNode.style.left = 'auto'
+  exportNode.style.top = 'auto'
 
   const exportHost = document.createElement('div')
   exportHost.className = 'pdf-export-host'
