@@ -217,10 +217,31 @@ export const exportDocx = async ({ current, lang }) => {
     })
   })
 
+  children.push(sectionHeading(current.sections.educationTitle))
+  current.sections.educationEntries.forEach((item, index) => {
+    children.push(
+      new Paragraph({
+        spacing: { before: index === 0 ? 40 : 160, after: 30 },
+        keepNext: true,
+        children: [new TextRun({ text: item.institution, bold: true, size: 24, color: '1F2933' })],
+      }),
+    )
+    children.push(
+      new Paragraph({
+        spacing: { after: 30 },
+        children: [new TextRun({ text: item.program, size: 22 })],
+      }),
+    )
+    children.push(
+      new Paragraph({
+        spacing: { after: 80 },
+        children: [new TextRun({ text: item.period, size: 20, color: '6B7280' })],
+      }),
+    )
+  })
+
   ;[
     [current.sections.technicalTitle, current.sections.technicalBullets],
-    [current.sections.testingApproachTitle, current.sections.testingApproachBullets],
-    [current.sections.domainExperienceTitle, current.sections.domainExperienceBullets],
     [current.sections.languagesTitle, current.sections.languageBullets],
   ].forEach(([title, items]) => {
     children.push(sectionHeading(title))

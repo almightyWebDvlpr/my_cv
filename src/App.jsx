@@ -22,6 +22,8 @@ const ENGINE_UI = {
     analyticsUnavailable: 'Connect GoatCounter',
     analyticsLive: 'Live total pageviews',
     analyticsFallback: 'Waiting for GoatCounter',
+    readTime: 'Reading time',
+    readTimeValue: 'min read',
     share: 'Share',
     shareReady: 'Shared',
     shareCopied: 'Link copied',
@@ -36,6 +38,8 @@ const ENGINE_UI = {
     analyticsUnavailable: 'Підключіть GoatCounter',
     analyticsLive: 'Загальна кількість переглядів',
     analyticsFallback: 'Очікування відповіді GoatCounter',
+    readTime: 'Час читання',
+    readTimeValue: 'хв читання',
     share: 'Поділитися',
     shareReady: 'Поширено',
     shareCopied: 'Посилання скопійовано',
@@ -51,7 +55,16 @@ const ToolbarIcon = ({ name }) => {
     doc: <path d="M7 3.75A1.75 1.75 0 0 1 8.75 2h5.94c.46 0 .9.18 1.23.5l3.58 3.58c.32.33.5.77.5 1.23v10.94A1.75 1.75 0 0 1 18.25 20h-9.5A1.75 1.75 0 0 1 7 18.25V3.75Zm7 .75v2.75c0 .41.34.75.75.75h2.75L14 4.5ZM9.2 15.5h1.14c1.13 0 1.86-.69 1.86-1.86 0-1.16-.73-1.84-1.86-1.84H9.2v3.7Zm1.08-2.84c.48 0 .78.34.78.98 0 .66-.3 1.01-.78 1.01h-.06v-1.99h.06Zm2.51 2.84h1.9c1.02 0 1.66-.55 1.66-1.42 0-.87-.64-1.4-1.66-1.4h-.88v-.88h2.17V10.9h-3.19v4.6Zm1.02-.86v-1.1h.76c.42 0 .66.21.66.55 0 .35-.24.55-.66.55h-.76Z" />,
     progress: <path d="M5 4.75A1.75 1.75 0 0 1 6.75 3h10.5A1.75 1.75 0 0 1 19 4.75v14.5A1.75 1.75 0 0 1 17.25 21H6.75A1.75 1.75 0 0 1 5 19.25V4.75Zm1.5.25v14.5h10.5V5H6.5Zm2 2.25h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1 0-1.5Zm0 3.5h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1 0-1.5Zm0 3.5h4.5a.75.75 0 0 1 0 1.5H8.5a.75.75 0 0 1 0-1.5Z" />,
     views: <path d="M12 5c5.23 0 9.27 4.11 10 6.99C21.27 14.89 17.23 19 12 19s-9.27-4.11-10-7.01C2.73 9.11 6.77 5 12 5Zm0 2c-3.87 0-7.02 2.88-7.87 5 .85 2.12 4 5 7.87 5s7.02-2.88 7.87-5c-.85-2.12-4-5-7.87-5Zm0 1.75A3.25 3.25 0 1 1 8.75 12 3.25 3.25 0 0 1 12 8.75Zm0 1.5A1.75 1.75 0 1 0 13.75 12 1.75 1.75 0 0 0 12 10.25Z" />,
+    time: <path d="M12 4.5A7.5 7.5 0 1 0 19.5 12 7.51 7.51 0 0 0 12 4.5Zm0 13.5A6 6 0 1 1 18 12a6 6 0 0 1-6 6Zm.75-9a.75.75 0 0 0-1.5 0v3.44c0 .2.08.39.22.53l2.25 2.25a.75.75 0 1 0 1.06-1.06l-2.03-2.03V9Z" />,
     share: <path d="M15.5 5a2.5 2.5 0 1 1 .22 1.03l-6.07 3.22a2.5 2.5 0 0 1 0 1.5l6.07 3.22a2.5 2.5 0 1 1-.7 1.3l-6.07-3.23a2.5 2.5 0 1 1 0-4.08l6.07-3.23A2.49 2.49 0 0 1 15.5 5Z" />,
+    menu: <path d="M4.75 7.5a.75.75 0 0 1 .75-.75h13a.75.75 0 0 1 0 1.5h-13a.75.75 0 0 1-.75-.75Zm0 4.5a.75.75 0 0 1 .75-.75h13a.75.75 0 0 1 0 1.5h-13a.75.75 0 0 1-.75-.75Zm0 4.5a.75.75 0 0 1 .75-.75h13a.75.75 0 0 1 0 1.5h-13a.75.75 0 0 1-.75-.75Z" />,
+    close: <path d="M7.28 7.22a.75.75 0 0 1 1.06 0L12 10.94l3.66-3.72a.75.75 0 1 1 1.08 1.04L13.06 12l3.68 3.74a.75.75 0 1 1-1.08 1.04L12 13.06l-3.66 3.72a.75.75 0 1 1-1.08-1.04L10.94 12L7.28 8.26a.75.75 0 0 1 0-1.04Z" />,
+    summary: <path d="M7 4.75A1.75 1.75 0 0 1 8.75 3h6.5A1.75 1.75 0 0 1 17 4.75v14.5A1.75 1.75 0 0 1 15.25 21h-6.5A1.75 1.75 0 0 1 7 19.25V4.75Zm2 .75a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5H9Zm0 4a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5H9Zm0 4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5H9Z" />,
+    expertise: <path d="M11.1 3.36a1.2 1.2 0 0 1 1.8 0l.56.65a1.2 1.2 0 0 0 1.07.39l.84-.12a1.2 1.2 0 0 1 1.48 1.02l.1.86a1.2 1.2 0 0 0 .7.9l.79.35a1.2 1.2 0 0 1 .54 1.72l-.43.75a1.2 1.2 0 0 0 0 1.14l.43.75a1.2 1.2 0 0 1-.54 1.72l-.8.35a1.2 1.2 0 0 0-.69.9l-.1.86a1.2 1.2 0 0 1-1.48 1.02l-.84-.12a1.2 1.2 0 0 0-1.07.39l-.56.65a1.2 1.2 0 0 1-1.8 0l-.56-.65a1.2 1.2 0 0 0-1.07-.39l-.84.12a1.2 1.2 0 0 1-1.48-1.02l-.1-.86a1.2 1.2 0 0 0-.7-.9l-.78-.35a1.2 1.2 0 0 1-.54-1.72l.43-.75a1.2 1.2 0 0 0 0-1.14l-.43-.75a1.2 1.2 0 0 1 .54-1.72l.79-.35a1.2 1.2 0 0 0 .7-.9l.1-.86a1.2 1.2 0 0 1 1.48-1.02l.84.12a1.2 1.2 0 0 0 1.07-.39l.56-.65ZM12 9.25A2.75 2.75 0 1 0 12 14.75A2.75 2.75 0 0 0 12 9.25Z" />,
+    experience: <path d="M8 5.75A1.75 1.75 0 0 1 9.75 4h4.5A1.75 1.75 0 0 1 16 5.75V7h1.25A1.75 1.75 0 0 1 19 8.75v8.5A1.75 1.75 0 0 1 17.25 19h-10.5A1.75 1.75 0 0 1 5 17.25v-8.5A1.75 1.75 0 0 1 6.75 7H8V5.75ZM9.5 7h5V5.75a.25.25 0 0 0-.25-.25h-4.5a.25.25 0 0 0-.25.25V7Zm-3 3.25v7c0 .14.11.25.25.25h10.5a.25.25 0 0 0 .25-.25v-7h-3.75v.5a.75.75 0 0 1-.75.75h-2a.75.75 0 0 1-.75-.75v-.5H6.5Z" />,
+    impact: <path d="M12 4.5l2.35 4.76 5.26.77-3.8 3.7.9 5.23L12 16.5l-4.71 2.46.9-5.23-3.8-3.7 5.26-.77L12 4.5Z" />,
+    education: <path d="M12 5 3 9.5l9 4.5 7.34-3.67V15h1.5V9.5L12 5Zm-5.25 7.36V15c0 1.8 2.35 3.25 5.25 3.25S17.25 16.8 17.25 15v-2.64L12 15l-5.25-2.64Z" />,
+    languages: <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18Zm5.43 5.3h-2.2c-.25-.93-.57-1.78-.97-2.5a7.55 7.55 0 0 1 3.17 2.5ZM12 4.83c.55.69 1.36 2 1.83 3.47h-3.66C10.64 6.83 11.45 5.52 12 4.83ZM8.74 5.8c-.4.72-.72 1.57-.97 2.5h-2.2A7.55 7.55 0 0 1 8.74 5.8ZM4.83 12c.22-.74.88-1.53 1.65-2.2h2.06c-.07.71-.11 1.45-.11 2.2 0 .75.04 1.49.11 2.2H6.48A7.4 7.4 0 0 1 4.83 12Zm3.91 3.2c.4.72.72 1.57.97 2.5A7.55 7.55 0 0 1 5.57 15.2h2.2Zm1.43 0h3.66c-.47 1.47-1.28 2.78-1.83 3.47-.55-.69-1.36-2-1.83-3.47Zm4.09 2.5c.4-.72.72-1.57.97-2.5h2.2a7.55 7.55 0 0 1-3.17 2.5Zm1.2-3.96c.07-.71.11-1.45.11-2.2 0-.75-.04-1.49-.11-2.2h2.06c.77.67 1.43 1.46 1.65 2.2-.22.74-.88 1.53-1.65 2.2h-2.06Z" />,
   }
 
   return (
@@ -123,7 +136,7 @@ const ResumeArticle = ({ current, lang, articleRef, hidden = false, registerSect
   return (
     <article
       ref={articleRef}
-      className={`resume paper-a4 lang-${lang} lens-enabled${hidden ? ' export-source' : ''}`}
+      className={`resume paper-a4 lang-${lang} lens-enabled${hidden ? ' export-source' : ''}` }
       aria-label={current.sections.ariaLabel}
       aria-hidden={hidden ? 'true' : undefined}
     >
@@ -210,20 +223,16 @@ const ResumeArticle = ({ current, lang, articleRef, hidden = false, registerSect
           </ul>
         </Section>
 
-        <Section domId={hidden ? undefined : 'approach'} title={current.sections.testingApproachTitle} className="compact-section" registerSection={registerSection} {...sectionState('approach')}>
-          <ul>
-            {current.sections.testingApproachBullets.map((item) => (
-              <li key={item}>{item}</li>
+        <Section domId={hidden ? undefined : 'education'} title={current.sections.educationTitle} className="compact-section education-section" registerSection={registerSection} {...sectionState('education')}>
+          <div className="education-list">
+            {current.sections.educationEntries.map((item) => (
+              <section className="education-item" key={`${item.institution}-${item.period}`}>
+                <h3>{item.institution}</h3>
+                <p>{item.program}</p>
+                <p className="meta">{item.period}</p>
+              </section>
             ))}
-          </ul>
-        </Section>
-
-        <Section domId={hidden ? undefined : 'domain'} title={current.sections.domainExperienceTitle} className="compact-section" registerSection={registerSection} {...sectionState('domain')}>
-          <ul>
-            {current.sections.domainExperienceBullets.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          </div>
         </Section>
 
         <Section domId={hidden ? undefined : 'languages'} title={current.sections.languagesTitle} className="compact-section" registerSection={registerSection} {...sectionState('languages')}>
@@ -247,6 +256,8 @@ export default function App() {
   const [analyticsValue, setAnalyticsValue] = useState(getInitialAnalyticsCount)
   const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(Boolean(GOATCOUNTER_JSON_URL) && getInitialOwnerMode() && !getInitialAnalyticsCount())
   const [shareStatus, setShareStatus] = useState('idle')
+  const [isMobileFabOpen, setIsMobileFabOpen] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
   const visibleResumeRef = useRef(null)
   const sectionNodesRef = useRef({})
   const navLockTimerRef = useRef(null)
@@ -260,8 +271,7 @@ export default function App() {
       { id: 'expertise', label: current.sections.coreSkillsTitle },
       { id: 'experience', label: current.sections.experienceTitle },
       { id: 'impact', label: current.sections.technicalTitle },
-      { id: 'approach', label: current.sections.testingApproachTitle },
-      { id: 'domain', label: current.sections.domainExperienceTitle },
+      { id: 'education', label: current.sections.educationTitle },
       { id: 'languages', label: current.sections.languagesTitle },
     ],
     [current],
@@ -269,6 +279,25 @@ export default function App() {
 
   const activeIndex = Math.max(0, navItems.findIndex((item) => item.id === activeSection))
   const progressPercent = navItems.length ? ((activeIndex + 1) / navItems.length) * 100 : 0
+
+  const estimatedReadMinutes = useMemo(() => {
+    const textChunks = [
+      ...current.sections.summary,
+      ...current.sections.coreSkills.flatMap((item) => [item.title, item.text]),
+      ...current.sections.jobs.flatMap((job) => [job.title, job.meta, ...job.bullets]),
+      ...(current.sections.educationEntries || []).flatMap((item) => [item.institution, item.program, item.period]),
+      ...current.sections.technicalBullets,
+      ...current.sections.languageBullets,
+    ]
+
+    const wordCount = textChunks
+      .join(' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length
+
+    return Math.max(1, Math.ceil(wordCount / 220))
+  }, [current])
 
   const handleShare = useCallback(async () => {
     const shareUrl = window.location.href
@@ -305,6 +334,27 @@ export default function App() {
     const timer = window.setTimeout(() => setShareStatus('idle'), 1800)
     return () => window.clearTimeout(timer)
   }, [shareStatus])
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 640px)')
+    const sync = () => {
+      const next = media.matches
+      setIsMobileViewport(next)
+      if (!next) setIsMobileFabOpen(false)
+    }
+
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
+
+
+  const handleLanguageChange = useCallback((nextLang) => {
+    if (nextLang === lang) return
+    setLang(nextLang)
+  }, [lang])
+
+
 
   const registerSection = useCallback((id, node) => {
     if (!id) return
@@ -537,13 +587,68 @@ export default function App() {
   return (
     <div className="page">
       <aside className="mini-nav" aria-label={ui.jumpTo}>
+        <button
+          className={`share-fab ${shareStatus !== 'idle' ? 'is-success' : ''} ${isMobileFabOpen ? 'is-open' : ''}`.trim()}
+          type="button"
+          onClick={isMobileViewport ? () => setIsMobileFabOpen((open) => !open) : handleShare}
+          aria-label={isMobileViewport ? (isMobileFabOpen ? 'Close mobile actions' : 'Open mobile actions') : shareStatus === 'shared' ? ui.shareReady : shareStatus === 'copied' ? ui.shareCopied : ui.share}
+          title={isMobileViewport ? (isMobileFabOpen ? 'Close mobile actions' : 'Open mobile actions') : shareStatus === 'shared' ? ui.shareReady : shareStatus === 'copied' ? ui.shareCopied : ui.share}
+          aria-expanded={isMobileViewport ? isMobileFabOpen : undefined}
+        >
+          <ToolbarIcon name={isMobileViewport ? (isMobileFabOpen ? 'close' : 'menu') : 'share'} />
+        </button>
+        <div className={`mobile-fab-menu ${isMobileFabOpen ? 'is-open' : ''}`.trim()} aria-hidden={!isMobileFabOpen}>
+          <button
+            type="button"
+            className={`mobile-fab-action ${lang === 'uk' ? 'is-active' : ''}`.trim()}
+            onClick={() => { handleLanguageChange('uk'); setIsMobileFabOpen(false) }}
+            aria-label={current.ui.langUa}
+          >
+            <span>UA</span>
+          </button>
+          <button
+            type="button"
+            className={`mobile-fab-action ${lang === 'en' ? 'is-active' : ''}`.trim()}
+            onClick={() => { handleLanguageChange('en'); setIsMobileFabOpen(false) }}
+            aria-label={current.ui.langEn}
+          >
+            <span>EN</span>
+          </button>
+          <button
+            type="button"
+            className="mobile-fab-action"
+            onClick={() => { handleExport('pdf'); setIsMobileFabOpen(false) }}
+            disabled={isExporting}
+            aria-label="Export PDF"
+          >
+            <span>PDF</span>
+          </button>
+          <button
+            type="button"
+            className="mobile-fab-action"
+            onClick={() => { handleExport('docx'); setIsMobileFabOpen(false) }}
+            disabled={isExporting}
+            aria-label="Export Word"
+          >
+            <span>Word</span>
+          </button>
+          <button
+            type="button"
+            className="mobile-fab-action mobile-fab-share"
+            onClick={() => { handleShare(); setIsMobileFabOpen(false) }}
+            aria-label={ui.share}
+          >
+            <ToolbarIcon name="share" />
+          </button>
+        </div>
+        <div className="mini-nav-scroll">
         <div className="mini-nav-controls">
           {isOwnerModeActive ? (
-            <div className="control-card analytics-card mini-control">
-              <span className="control-meta">
+            <div className="control-card analytics-card mini-control corner-icon-card">
+              <span className="corner-card-icon" aria-hidden="true">
                 <ToolbarIcon name="views" />
-                <span>{ui.analytics}</span>
               </span>
+              <span className="control-meta" aria-hidden="true"></span>
               <div className="analytics-badge analytics-badge-rich">
                 <strong className="analytics-number">{analyticsValue || '—'}</strong>
                 <span className="analytics-caption">
@@ -553,48 +658,61 @@ export default function App() {
             </div>
           ) : null}
 
-          <div className="control-card select-card mini-control">
-            <span className="control-meta">
-              <ToolbarIcon name="globe" />
-              <span>{ui.language}</span>
+          <div className="control-card readtime-card mini-control corner-icon-card">
+            <span className="corner-card-icon" aria-hidden="true">
+              <ToolbarIcon name="time" />
             </span>
-            <div className="select-shell compact-select">
-              <select id="lang-select" className="paper-select" value={lang} onChange={(event) => setLang(event.target.value)}>
-                <option value="uk">{current.ui.langUa}</option>
-                <option value="en">{current.ui.langEn}</option>
-              </select>
-              <span className="select-chevron">
-                <ToolbarIcon name="chevron" />
-              </span>
+            <span className="control-meta" aria-hidden="true"></span>
+            <div className="readtime-badge">
+              <strong>{estimatedReadMinutes}</strong>
+              <span>{ui.readTimeValue}</span>
             </div>
           </div>
 
-          <div className="control-card export-card mini-control">
-            <span className="control-meta">
-              <ToolbarIcon name="file" />
-              <span>{ui.quickExport}</span>
+          <div className="control-card select-card mini-control compact-choice-card">
+            <span className="compact-choice-icon" aria-hidden="true">
+              <ToolbarIcon name="globe" />
             </span>
-            <div className="quick-export">
-              <button className="export-btn" type="button" onClick={() => handleExport('pdf')} disabled={isExporting}>
-                <ToolbarIcon name="pdf" />
-                <span>{current.ui.exportPdf}</span>
+            <div className="language-toggle" role="tablist" aria-label={ui.language}>
+              <button
+                type="button"
+                className={`language-pill ${lang === 'uk' ? 'is-active' : ''}`.trim()}
+                onClick={() => { handleLanguageChange('uk'); setIsMobileFabOpen(false) }}
+                aria-pressed={lang === 'uk'}
+                title={current.ui.langUa}
+              >
+                <span className="language-pill-code" aria-hidden="true">UA</span>
               </button>
-              <button className="export-btn" type="button" onClick={() => handleExport('docx')} disabled={isExporting}>
-                <ToolbarIcon name="doc" />
-                <span>{current.ui.exportDocx}</span>
+              <button
+                type="button"
+                className={`language-pill ${lang === 'en' ? 'is-active' : ''}`.trim()}
+                onClick={() => { handleLanguageChange('en'); setIsMobileFabOpen(false) }}
+                aria-pressed={lang === 'en'}
+                title={current.ui.langEn}
+              >
+                <span className="language-pill-code" aria-hidden="true">EN</span>
               </button>
             </div>
-            <button className={`share-btn ${shareStatus !== 'idle' ? 'is-success' : ''}`.trim()} type="button" onClick={handleShare}>
-              <ToolbarIcon name="share" />
-              <span>{shareStatus === 'shared' ? ui.shareReady : shareStatus === 'copied' ? ui.shareCopied : ui.share}</span>
-            </button>
+          </div>
+
+          <div className="control-card export-card mini-control compact-choice-card">
+            <span className="compact-choice-icon" aria-hidden="true">
+              <ToolbarIcon name="file" />
+            </span>
+            <div className="quick-export">
+              <button className="export-btn" type="button" onClick={() => { handleExport('pdf'); setIsMobileFabOpen(false) }} disabled={isExporting}>
+                <span>PDF</span>
+              </button>
+              <button className="export-btn" type="button" onClick={() => { handleExport('docx'); setIsMobileFabOpen(false) }} disabled={isExporting}>
+                <span>Word</span>
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="mini-nav-header">
-          <span className="control-meta">
+          <span className="control-meta" aria-hidden="true">
             <ToolbarIcon name="progress" />
-            <span>{ui.progress}</span>
           </span>
           <strong>
             {activeIndex + 1}/{navItems.length}
@@ -615,9 +733,18 @@ export default function App() {
             </button>
           ))}
         </div>
+        </div>
       </aside>
 
-      <ResumeArticle current={current} lang={lang} articleRef={visibleResumeRef} registerSection={registerSection} activeSectionId={activeSection} />
+      <div className="resume-stage">
+        <ResumeArticle
+          current={current}
+          lang={lang}
+          articleRef={visibleResumeRef}
+          registerSection={registerSection}
+          activeSectionId={activeSection}
+        />
+      </div>
       <div className="page-bottom-spacer" aria-hidden="true" />
     </div>
   )
