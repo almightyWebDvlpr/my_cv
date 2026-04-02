@@ -34,7 +34,10 @@ export default function App() {
   const [isMobileFabOpen, setIsMobileFabOpen] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
   const [isOwnerModeActive] = useState(getInitialOwnerMode)
+  const [isMobileHeaderVisible, setIsMobileHeaderVisible] = useState(false)
+  const [sectionFlashId, setSectionFlashId] = useState('')
   const visibleResumeRef = useRef(null)
+  const sectionFlashTimerRef = useRef(null)
 
   const current = cvContent[lang] ?? cvContent[defaultLanguage]
   const ui = ENGINE_UI[lang] ?? ENGINE_UI.en
@@ -76,6 +79,17 @@ export default function App() {
     setLang(nextLang)
   }, [lang])
 
+  const triggerSectionFlash = useCallback((id) => {
+    if (sectionFlashTimerRef.current) {
+      window.clearTimeout(sectionFlashTimerRef.current)
+    }
+
+    setSectionFlashId(id)
+    sectionFlashTimerRef.current = window.setTimeout(() => {
+      setSectionFlashId('')
+    }, 820)
+  }, [])
+
   const handleExport = useCallback(async (format) => {
     if (isExporting || !visibleResumeRef.current) return
 
@@ -100,6 +114,51 @@ export default function App() {
 
   const handleCloseMobileFab = useCallback(() => setIsMobileFabOpen(false), [])
 
+  const handleJumpToSection = useCallback((id) => {
+    triggerSectionFlash(id)
+    handleJumpTo(id)
+    if (isMobileViewport) setIsMobileFabOpen(false)
+  }, [handleJumpTo, isMobileViewport, triggerSectionFlash])
+
+  useEffect(() => {
+    if (!isMobileViewport) {
+      setIsMobileHeaderVisible(false)
+      return
+    }
+
+    let frameId = 0
+
+    const syncHeader = () => {
+      frameId = 0
+      const headerNode = visibleResumeRef.current?.querySelector('.header')
+      if (!headerNode) return
+
+      const shouldShow = headerNode.getBoundingClientRect().bottom <= 72
+      setIsMobileHeaderVisible((currentValue) => (currentValue === shouldShow ? currentValue : shouldShow))
+    }
+
+    const onScroll = () => {
+      if (frameId) return
+      frameId = window.requestAnimationFrame(syncHeader)
+    }
+
+    syncHeader()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [isMobileViewport])
+
+  useEffect(() => () => {
+    if (sectionFlashTimerRef.current) {
+      window.clearTimeout(sectionFlashTimerRef.current)
+    }
+  }, [])
+
   const shareAriaLabel = isMobileViewport
     ? (isMobileFabOpen ? 'Close mobile actions' : 'Open mobile actions')
     : shareStatus === 'shared'
@@ -111,6 +170,30 @@ export default function App() {
   return (
     <div className="page">
       <aside className="mini-nav" aria-label={ui.jumpTo}>
+        <div className={`mobile-compact-header ${isMobileHeaderVisible ? 'is-visible' : ''}`.trim()} aria-hidden={!isMobileHeaderVisible}>
+          <span className="mobile-compact-title">{current.name}</span>
+          <div className="mobile-compact-actions">
+            <button
+              className="mobile-compact-action"
+              type="button"
+              onClick={handleShare}
+              aria-label={ui.share}
+              title={ui.share}
+            >
+              <ToolbarIcon name="share" />
+            </button>
+            <button
+              className={`mobile-compact-action ${isMobileFabOpen ? 'is-active' : ''}`.trim()}
+              type="button"
+              onClick={() => setIsMobileFabOpen((open) => !open)}
+              aria-label={shareAriaLabel}
+              title={shareAriaLabel}
+              aria-expanded={isMobileFabOpen}
+            >
+              <ToolbarIcon name={isMobileFabOpen ? 'close' : 'menu'} />
+            </button>
+          </div>
+        </div>
         <button
           className={`share-fab ${shareStatus !== 'idle' ? 'is-success' : ''} ${isMobileFabOpen ? 'is-open' : ''}`.trim()}
           type="button"
@@ -149,7 +232,7 @@ export default function App() {
           progressPercent={progressPercent}
           onLanguageChange={handleLanguageChange}
           onExport={handleExport}
-          onJumpTo={handleJumpTo}
+          onJumpTo={handleJumpToSection}
           onCloseMobileFab={handleCloseMobileFab}
         />
       </aside>
@@ -161,6 +244,7 @@ export default function App() {
           articleRef={visibleResumeRef}
           registerSection={registerSection}
           activeSectionId={activeSection}
+          sectionFlashId={sectionFlashId}
         />
       </div>
       <div className="page-bottom-spacer" aria-hidden="true" />

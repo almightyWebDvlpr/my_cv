@@ -75,7 +75,7 @@
   font-size: 9.4pt;
   font-weight: 800;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
 
 .export-btn:hover,
@@ -278,7 +278,7 @@
   font-weight: 900;
   line-height: 1;
   box-shadow: 0 4px 10px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.94);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
 .language-pill {
@@ -292,7 +292,7 @@
   border-color: rgba(47, 91, 211, 0.28);
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.96);
   outline: none;
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .language-pill.is-active {
@@ -352,7 +352,6 @@
   position: absolute;
   inset: 8px;
   border-radius: 18px;
-  border: 1px solid rgba(233, 238, 248, 0.9);
   pointer-events: none;
 }
 
@@ -433,9 +432,12 @@
   opacity: 1;
   margin-inline: -12px;
   padding: 16px 20px 14px;
-  background: linear-gradient(180deg, rgba(238, 243, 255, 0.96) 0%, rgba(255, 255, 255, 0.985) 100%);
-  box-shadow: 0 20px 38px rgba(47, 91, 211, 0.1), 0 6px 18px rgba(15, 23, 42, 0.04), inset 0 0 0 1px rgba(47, 91, 211, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.96);
   border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(238, 243, 255, 0.58) 52%, rgba(255, 255, 255, 0.82) 100%);
+  border: 1px solid rgba(47, 91, 211, 0.16);
+  box-shadow: 0 22px 44px rgba(47, 91, 211, 0.12), 0 8px 22px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.92), inset 0 -1px 0 rgba(47, 91, 211, 0.08);
+  backdrop-filter: saturate(1.08) blur(14px);
+  -webkit-backdrop-filter: saturate(1.08) blur(14px);
 }
 
 @media (max-width: 1320px) {

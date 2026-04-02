@@ -23,6 +23,14 @@
     background: var(--bg);
   }
 
+  .resume-stage {
+    padding-top: 0;
+  }
+
+  .resume {
+    scroll-margin-top: 74px;
+  }
+
   .share-fab {
     width: 40px;
     height: 40px;

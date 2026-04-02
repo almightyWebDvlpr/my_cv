@@ -8,10 +8,11 @@ const CONTACT_LINKS = {
   telegram: 'https://t.me/serhii_kurylenko',
 }
 
-const ResumeArticle = ({ current, lang, articleRef, hidden = false, registerSection, activeSectionId = '' }) => {
+const ResumeArticle = ({ current, lang, articleRef, hidden = false, registerSection, activeSectionId = '', sectionFlashId = '' }) => {
   const sectionState = (id) => ({
     isActive: !hidden && activeSectionId === id,
     isDimmed: !hidden && activeSectionId && activeSectionId !== id,
+    isFlashing: !hidden && sectionFlashId === id,
   })
 
   return (

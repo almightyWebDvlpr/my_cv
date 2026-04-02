@@ -132,6 +132,7 @@
 }
 
 .contact-item {
+  transition: color 0.18s ease, transform 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -145,6 +146,7 @@
 
 .contact-item:hover {
   color: var(--section-charcoal);
+  transform: translateY(-1px);
 }
 
 .contact-icon {
@@ -161,6 +163,7 @@
 }
 
 .section-card {
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
   position: relative;
   scroll-margin-top: 110px;
   padding-top: 3px;
@@ -168,6 +171,7 @@
 }
 
 .pdf-bottom-grid .section-card {
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
   padding-top: 2px;
   padding-bottom: 2px;
 }
@@ -369,4 +373,28 @@ li::marker {
 
 .resume.pdf-capture .expertise-section .skill-group {
   break-inside: avoid;
+}
+
+@keyframes sectionFlash {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 91, 211, 0);
+    border-color: rgba(208, 218, 238, 0.92);
+    transform: translateY(10px);
+  }
+
+  38% {
+    box-shadow: 0 18px 42px rgba(47, 91, 211, 0.12);
+    border-color: rgba(47, 91, 211, 0.24);
+    transform: translateY(0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(47, 91, 211, 0);
+    border-color: rgba(208, 218, 238, 0.92);
+    transform: translateY(0);
+  }
+}
+
+.section-card.is-flashing {
+  animation: sectionFlash 0.82s cubic-bezier(0.18, 0.82, 0.22, 1);
 }
