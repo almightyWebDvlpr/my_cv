@@ -22,6 +22,9 @@ const ENGINE_UI = {
     analyticsUnavailable: 'Connect GoatCounter',
     analyticsLive: 'Live total pageviews',
     analyticsFallback: 'Waiting for GoatCounter',
+    share: 'Share',
+    shareReady: 'Shared',
+    shareCopied: 'Link copied',
   },
   uk: {
     language: 'Мова',
@@ -33,6 +36,9 @@ const ENGINE_UI = {
     analyticsUnavailable: 'Підключіть GoatCounter',
     analyticsLive: 'Загальна кількість переглядів',
     analyticsFallback: 'Очікування відповіді GoatCounter',
+    share: 'Поділитися',
+    shareReady: 'Поширено',
+    shareCopied: 'Посилання скопійовано',
   },
 }
 
@@ -45,6 +51,7 @@ const ToolbarIcon = ({ name }) => {
     doc: <path d="M7 3.75A1.75 1.75 0 0 1 8.75 2h5.94c.46 0 .9.18 1.23.5l3.58 3.58c.32.33.5.77.5 1.23v10.94A1.75 1.75 0 0 1 18.25 20h-9.5A1.75 1.75 0 0 1 7 18.25V3.75Zm7 .75v2.75c0 .41.34.75.75.75h2.75L14 4.5ZM9.2 15.5h1.14c1.13 0 1.86-.69 1.86-1.86 0-1.16-.73-1.84-1.86-1.84H9.2v3.7Zm1.08-2.84c.48 0 .78.34.78.98 0 .66-.3 1.01-.78 1.01h-.06v-1.99h.06Zm2.51 2.84h1.9c1.02 0 1.66-.55 1.66-1.42 0-.87-.64-1.4-1.66-1.4h-.88v-.88h2.17V10.9h-3.19v4.6Zm1.02-.86v-1.1h.76c.42 0 .66.21.66.55 0 .35-.24.55-.66.55h-.76Z" />,
     progress: <path d="M5 4.75A1.75 1.75 0 0 1 6.75 3h10.5A1.75 1.75 0 0 1 19 4.75v14.5A1.75 1.75 0 0 1 17.25 21H6.75A1.75 1.75 0 0 1 5 19.25V4.75Zm1.5.25v14.5h10.5V5H6.5Zm2 2.25h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1 0-1.5Zm0 3.5h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1 0-1.5Zm0 3.5h4.5a.75.75 0 0 1 0 1.5H8.5a.75.75 0 0 1 0-1.5Z" />,
     views: <path d="M12 5c5.23 0 9.27 4.11 10 6.99C21.27 14.89 17.23 19 12 19s-9.27-4.11-10-7.01C2.73 9.11 6.77 5 12 5Zm0 2c-3.87 0-7.02 2.88-7.87 5 .85 2.12 4 5 7.87 5s7.02-2.88 7.87-5c-.85-2.12-4-5-7.87-5Zm0 1.75A3.25 3.25 0 1 1 8.75 12 3.25 3.25 0 0 1 12 8.75Zm0 1.5A1.75 1.75 0 1 0 13.75 12 1.75 1.75 0 0 0 12 10.25Z" />,
+    share: <path d="M15.5 5a2.5 2.5 0 1 1 .22 1.03l-6.07 3.22a2.5 2.5 0 0 1 0 1.5l6.07 3.22a2.5 2.5 0 1 1-.7 1.3l-6.07-3.23a2.5 2.5 0 1 1 0-4.08l6.07-3.23A2.49 2.49 0 0 1 15.5 5Z" />,
   }
 
   return (
@@ -239,6 +246,7 @@ export default function App() {
   const [isOwnerModeActive] = useState(getInitialOwnerMode)
   const [analyticsValue, setAnalyticsValue] = useState(getInitialAnalyticsCount)
   const [isAnalyticsLoading, setIsAnalyticsLoading] = useState(Boolean(GOATCOUNTER_JSON_URL) && getInitialOwnerMode() && !getInitialAnalyticsCount())
+  const [shareStatus, setShareStatus] = useState('idle')
   const visibleResumeRef = useRef(null)
   const sectionNodesRef = useRef({})
   const navLockTimerRef = useRef(null)
@@ -261,6 +269,42 @@ export default function App() {
 
   const activeIndex = Math.max(0, navItems.findIndex((item) => item.id === activeSection))
   const progressPercent = navItems.length ? ((activeIndex + 1) / navItems.length) * 100 : 0
+
+  const handleShare = useCallback(async () => {
+    const shareUrl = window.location.href
+    const shareTitle = current.ui.seoTitle
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: shareTitle,
+          url: shareUrl,
+        })
+        setShareStatus('shared')
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareUrl)
+        setShareStatus('copied')
+      } else {
+        const input = document.createElement('input')
+        input.value = shareUrl
+        document.body.appendChild(input)
+        input.select()
+        document.execCommand('copy')
+        document.body.removeChild(input)
+        setShareStatus('copied')
+      }
+    } catch (error) {
+      if (error?.name === 'AbortError') return
+      setShareStatus('copied')
+    }
+  }, [current.ui.seoTitle])
+
+  useEffect(() => {
+    if (shareStatus === 'idle') return undefined
+
+    const timer = window.setTimeout(() => setShareStatus('idle'), 1800)
+    return () => window.clearTimeout(timer)
+  }, [shareStatus])
 
   const registerSection = useCallback((id, node) => {
     if (!id) return
@@ -540,6 +584,10 @@ export default function App() {
                 <span>{current.ui.exportDocx}</span>
               </button>
             </div>
+            <button className={`share-btn ${shareStatus !== 'idle' ? 'is-success' : ''}`.trim()} type="button" onClick={handleShare}>
+              <ToolbarIcon name="share" />
+              <span>{shareStatus === 'shared' ? ui.shareReady : shareStatus === 'copied' ? ui.shareCopied : ui.share}</span>
+            </button>
           </div>
         </div>
 

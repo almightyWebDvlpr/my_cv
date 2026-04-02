@@ -700,6 +700,37 @@ li::marker {
   cursor: wait;
 }
 
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid rgba(47, 91, 211, 0.18);
+  background: linear-gradient(180deg, rgba(47, 91, 211, 0.08) 0%, rgba(255, 255, 255, 0.98) 100%);
+  color: var(--name-blue);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 10pt;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.share-btn:hover,
+.share-btn:focus-visible {
+  border-color: rgba(47, 91, 211, 0.32);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  outline: none;
+}
+
+.share-btn.is-success {
+  color: #185c37;
+  border-color: rgba(24, 92, 55, 0.18);
+  background: linear-gradient(180deg, rgba(24, 92, 55, 0.08) 0%, rgba(255, 255, 255, 0.98) 100%);
+}
+
 .analytics-badge {
   display: inline-flex;
   align-items: center;
