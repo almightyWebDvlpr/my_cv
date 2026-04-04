@@ -162,12 +162,6 @@ export default function App() {
     }
   }, [isTabletViewport])
 
-  useEffect(() => {
-    if (isTabletViewport && !isCompactHeaderVisible && isMobileFabOpen) {
-      setIsMobileFabOpen(false)
-    }
-  }, [isCompactHeaderVisible, isMobileFabOpen, isTabletViewport])
-
   useEffect(() => () => {
     if (sectionFlashTimerRef.current) {
       window.clearTimeout(sectionFlashTimerRef.current)
@@ -185,7 +179,7 @@ export default function App() {
   return (
     <div className="page">
       <aside className="mini-nav" aria-label={ui.jumpTo}>
-        <div className={`mobile-compact-header ${isCompactHeaderVisible ? 'is-visible' : ''}`.trim()} aria-hidden={!isCompactHeaderVisible}>
+        <div className={`mobile-compact-header ${isCompactHeaderVisible ? 'is-visible' : ''}`.trim()}>
           <span className="mobile-compact-title">{current.name}</span>
           <div className="mobile-compact-actions">
             <span className="mobile-compact-readtime">
