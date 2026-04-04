@@ -143,7 +143,12 @@ export default function App() {
       if (!headerNode) return
 
       const shouldShow = headerNode.getBoundingClientRect().bottom <= 88
-      setIsCompactHeaderVisible((currentValue) => (currentValue === shouldShow ? currentValue : shouldShow))
+      setIsCompactHeaderVisible((currentValue) => {
+        if (currentValue && !shouldShow) {
+          setIsMobileFabOpen(false)
+        }
+        return currentValue === shouldShow ? currentValue : shouldShow
+      })
     }
 
     const onScroll = () => {
