@@ -575,13 +575,30 @@
     letter-spacing: 0.06em;
   }
 
+  .resume.lens-enabled .section-card {
+    transition: none;
+    margin-inline: 0;
+  }
+
   .resume.lens-enabled .section-card.is-dimmed {
-    opacity: 0.72;
+    opacity: 1;
   }
 
   .resume.lens-enabled .section-card.is-active {
     margin-inline: 0;
-    padding: 12px 14px 10px;
+    padding-top: 3px;
+    padding-right: 0;
+    padding-bottom: 3px;
+    padding-left: 0;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .resume.lens-enabled .section-card.is-flashing {
+    animation: none;
   }
 
   .header {

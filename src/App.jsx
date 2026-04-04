@@ -33,9 +33,10 @@ export default function App() {
   const [isExporting, setIsExporting] = useState(false)
   const [isMobileFabOpen, setIsMobileFabOpen] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
+  const [isTabletViewport, setIsTabletViewport] = useState(false)
   const [isOwnerModeActive] = useState(getInitialOwnerMode)
-  const [isMobileHeaderVisible, setIsMobileHeaderVisible] = useState(false)
   const [sectionFlashId, setSectionFlashId] = useState('')
+  const [isCompactHeaderVisible, setIsCompactHeaderVisible] = useState(false)
   const visibleResumeRef = useRef(null)
   const sectionFlashTimerRef = useRef(null)
 
@@ -51,16 +52,24 @@ export default function App() {
   const progressPercent = navItems.length ? ((activeIndex + 1) / navItems.length) * 100 : 0
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 640px)')
+    const mobileMedia = window.matchMedia('(max-width: 640px)')
+    const tabletMedia = window.matchMedia('(min-width: 641px) and (max-width: 1120px)')
+
     const sync = () => {
-      const next = media.matches
-      setIsMobileViewport(next)
-      if (!next) setIsMobileFabOpen(false)
+      const nextMobile = mobileMedia.matches
+      const nextTablet = tabletMedia.matches
+      setIsMobileViewport(nextMobile)
+      setIsTabletViewport(nextTablet)
+      if (!nextMobile && !nextTablet) setIsMobileFabOpen(false)
     }
 
     sync()
-    media.addEventListener('change', sync)
-    return () => media.removeEventListener('change', sync)
+    mobileMedia.addEventListener('change', sync)
+    tabletMedia.addEventListener('change', sync)
+    return () => {
+      mobileMedia.removeEventListener('change', sync)
+      tabletMedia.removeEventListener('change', sync)
+    }
   }, [])
 
   useEffect(() => {
@@ -121,8 +130,8 @@ export default function App() {
   }, [handleJumpTo, isMobileViewport, triggerSectionFlash])
 
   useEffect(() => {
-    if (!isMobileViewport) {
-      setIsMobileHeaderVisible(false)
+    if (!isTabletViewport) {
+      setIsCompactHeaderVisible(false)
       return
     }
 
@@ -133,8 +142,8 @@ export default function App() {
       const headerNode = visibleResumeRef.current?.querySelector('.header')
       if (!headerNode) return
 
-      const shouldShow = headerNode.getBoundingClientRect().bottom <= 72
-      setIsMobileHeaderVisible((currentValue) => (currentValue === shouldShow ? currentValue : shouldShow))
+      const shouldShow = headerNode.getBoundingClientRect().bottom <= 88
+      setIsCompactHeaderVisible((currentValue) => (currentValue === shouldShow ? currentValue : shouldShow))
     }
 
     const onScroll = () => {
@@ -151,7 +160,13 @@ export default function App() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
-  }, [isMobileViewport])
+  }, [isTabletViewport])
+
+  useEffect(() => {
+    if (isTabletViewport && !isCompactHeaderVisible && isMobileFabOpen) {
+      setIsMobileFabOpen(false)
+    }
+  }, [isCompactHeaderVisible, isMobileFabOpen, isTabletViewport])
 
   useEffect(() => () => {
     if (sectionFlashTimerRef.current) {
@@ -159,7 +174,7 @@ export default function App() {
     }
   }, [])
 
-  const shareAriaLabel = isMobileViewport
+  const shareAriaLabel = (isMobileViewport || isTabletViewport)
     ? (isMobileFabOpen ? 'Close mobile actions' : 'Open mobile actions')
     : shareStatus === 'shared'
       ? ui.shareReady
@@ -170,18 +185,13 @@ export default function App() {
   return (
     <div className="page">
       <aside className="mini-nav" aria-label={ui.jumpTo}>
-        <div className={`mobile-compact-header ${isMobileHeaderVisible ? 'is-visible' : ''}`.trim()} aria-hidden={!isMobileHeaderVisible}>
+        <div className={`mobile-compact-header ${isCompactHeaderVisible ? 'is-visible' : ''}`.trim()} aria-hidden={!isCompactHeaderVisible}>
           <span className="mobile-compact-title">{current.name}</span>
           <div className="mobile-compact-actions">
-            <button
-              className="mobile-compact-action"
-              type="button"
-              onClick={handleShare}
-              aria-label={ui.share}
-              title={ui.share}
-            >
-              <ToolbarIcon name="share" />
-            </button>
+            <span className="mobile-compact-readtime">
+              <strong>{estimatedReadMinutes}</strong>
+              <span>{ui.readTimeValue}</span>
+            </span>
             <button
               className={`mobile-compact-action ${isMobileFabOpen ? 'is-active' : ''}`.trim()}
               type="button"

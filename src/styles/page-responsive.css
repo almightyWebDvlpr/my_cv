@@ -17,10 +17,10 @@
   }
 }
 
-@media (max-width: 640px) {
+
+@media (min-width: 641px) and (max-width: 1120px) {
   .page {
-    padding: 12px 10px 24px;
-    background: var(--bg);
+    padding: 18px 14px 32px;
   }
 
   .resume-stage {
@@ -28,7 +28,14 @@
   }
 
   .resume {
-    scroll-margin-top: 74px;
+    scroll-margin-top: 82px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px 10px 24px;
+    background: var(--bg);
   }
 
   .share-fab {
@@ -40,7 +47,11 @@
 
 @media (max-width: 420px) {
   .resume {
-    padding: 16px 14px;
+    padding: 18px 16px;
+  }
+
+  .resume::before {
+    inset: 10px;
   }
 
   .header h1 {
